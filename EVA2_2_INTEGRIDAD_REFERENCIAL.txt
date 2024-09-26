@@ -1,0 +1,269 @@
+EVA2_2_INTEGRIDAD_REFERENCIAL
+
+MySQL Shell 8.0.38
+
+Copyright (c) 2016, 2024, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost;
+Creating a Classic session to 'root@localhost;'
+Please provide the password for 'root@localhost;': *********
+MySQL Error 2005 (HY000): Unknown MySQL server host 'localhost;' (11001)
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 8
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > use tbd_e2;
+Default schema set to `tbd_e2`.
+Fetching global names, object names from `tbd_e2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura;
++-------+-----------+
+| folio | idCliente |
++-------+-----------+
+|     2 |         2 |
+|     4 |         2 |
+|     5 |         2 |
+|     7 |         2 |
+|     8 |         5 |
++-------+-----------+
+5 rows in set (0.0079 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from cliente;
++----+--------+----------+---------------+
+| id | nombre | apellido | rfc           |
++----+--------+----------+---------------+
+|  2 | Ana    | Montes   | MOXA870102520 |
++----+--------+----------+---------------+
+1 row in set (0.0022 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura
+                                       -> add constraint foreing key (idCliente)
+                                       -> references cliente(id);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key (idCliente)
+references cliente(id)' at line 2
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura add constraint foreign key (idCliente)  references cliente(id);
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`tbd_e2`.`#sql-1b08_8`, CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`id`))
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura;
++-------+-----------+
+| folio | idCliente |
++-------+-----------+
+|     2 |         2 |
+|     4 |         2 |
+|     5 |         2 |
+|     7 |         2 |
+|     8 |         5 |
++-------+-----------+
+5 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > delete from factura
+                                       -> where idCliente = 5;
+Query OK, 1 row affected (0.0132 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura;
++-------+-----------+
+| folio | idCliente |
++-------+-----------+
+|     2 |         2 |
+|     4 |         2 |
+|     5 |         2 |
+|     7 |         2 |
++-------+-----------+
+4 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura add constraint foreign key (idCliente)  references cliente(id);
+Query OK, 4 rows affected (0.1128 sec)
+
+Records: 4  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > show create table factura;
++---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table
+
+                                                                                          |
++---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| factura | CREATE TABLE `factura` (
+  `folio` int NOT NULL AUTO_INCREMENT,
+  `idCliente` int NOT NULL,
+  PRIMARY KEY (`folio`),
+  KEY `idCliente` (`idCliente`),
+  CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0029 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura drop constraint factura_ibfk_1;
+Query OK, 0 rows affected (0.0245 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura add constraint foreign key (idCliente)  references cliente(id) on delete restrict on update restrict;
+Query OK, 4 rows affected (0.0850 sec)
+
+Records: 4  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > show create table factura;
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table
+
+
+        |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| factura | CREATE TABLE `factura` (
+  `folio` int NOT NULL AUTO_INCREMENT,
+  `idCliente` int NOT NULL,
+  PRIMARY KEY (`folio`),
+  KEY `idCliente` (`idCliente`),
+  CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * factura;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'factura' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura;
++-------+-----------+
+| folio | idCliente |
++-------+-----------+
+|     2 |         2 |
+|     4 |         2 |
+|     5 |         2 |
+|     7 |         2 |
++-------+-----------+
+4 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from cliente;
++----+--------+----------+---------------+
+| id | nombre | apellido | rfc           |
++----+--------+----------+---------------+
+|  2 | Ana    | Montes   | MOXA870102520 |
++----+--------+----------+---------------+
+1 row in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > delete from cliente
+                                       -> where id = 2;
+ERROR: 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`tbd_e2`.`factura`, CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > update cliente
+                                       -> set
+                                       -> id = 5
+                                       -> where
+                                       -> id = 2;
+ERROR: 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`tbd_e2`.`factura`, CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura
+                                       -> drop constraint factura_ibfk_1;
+Query OK, 0 rows affected (0.0176 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura
+                                       -> add constraint foreign key (idCliente)
+                                       -> references cliente(id)
+                                       -> on delete cascade
+                                       -> on update cascade;
+Query OK, 4 rows affected (0.1022 sec)
+
+Records: 4  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > update cliente
+                                       -> set
+                                       -> id = 5
+                                       -> where id = 2;
+Query OK, 1 row affected (0.0109 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from cliente:
+                                       -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from cliente;
++----+--------+----------+---------------+
+| id | nombre | apellido | rfc           |
++----+--------+----------+---------------+
+|  5 | Ana    | Montes   | MOXA870102520 |
++----+--------+----------+---------------+
+1 row in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura;
++-------+-----------+
+| folio | idCliente |
++-------+-----------+
+|     2 |         5 |
+|     4 |         5 |
+|     5 |         5 |
+|     7 |         5 |
++-------+-----------+
+4 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > delete from cliente where id = 5;
+Query OK, 1 row affected (0.0078 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from cliente;
+Empty set (0.0010 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura;
+Empty set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura
+                                       -> drop constraint factura_ibfk_1;
+Query OK, 0 rows affected (0.0173 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > desc cliente;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int         | NO   | PRI | NULL    | auto_increment |
+| nombre   | varchar(50) | NO   |     | NULL    |                |
+| apellido | varchar(50) | YES  |     | NULL    |                |
+| rfc      | varchar(13) | NO   |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+4 rows in set (0.0061 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into cliente(nombre, apellido, rfc)
+                                       -> values ("Dina", "Kenway", "DINA123"),("XXX", "YYY", "ZZZ235745");
+Query OK, 2 rows affected (0.0150 sec)
+
+Records: 2  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from cliente;
++----+--------+----------+-----------+
+| id | nombre | apellido | rfc       |
++----+--------+----------+-----------+
+|  6 | Dina   | Kenway   | DINA123   |
+|  7 | XXX    | YYY      | ZZZ235745 |
++----+--------+----------+-----------+
+2 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into factura(idCliente)
+                                       -> values (6),(6),(7),(7),(7),(7);
+Query OK, 6 rows affected (0.0089 sec)
+
+Records: 6  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura;
++-------+-----------+
+| folio | idCliente |
++-------+-----------+
+|     9 |         6 |
+|    10 |         6 |
+|    11 |         7 |
+|    12 |         7 |
+|    13 |         7 |
+|    14 |         7 |
++-------+-----------+
+6 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > desc factura;
++-----------+------+------+-----+---------+----------------+
+| Field     | Type | Null | Key | Default | Extra          |
++-----------+------+------+-----+---------+----------------+
+| folio     | int  | NO   | PRI | NULL    | auto_increment |
+| idCliente | int  | NO   | MUL | NULL    |                |
++-----------+------+------+-----+---------+----------------+
+2 rows in set (0.0024 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura add constraint foreign key (idCliente) references cliente(id) on delete setnull on update setnull;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'setnull on update setnull' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura add constraint foreign key (idCliente) references cliente(id) on delete no action on update no action;
+Query OK, 6 rows affected (0.0989 sec)
+
+Records: 6  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > deleate from cliente
+                                       -> where id = 6;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'deleate from cliente
+where id = 6' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > update cliente set id = 4 where id = 6;
+ERROR: 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`tbd_e2`.`factura`, CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`id`))
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura
+                                       -> drop constraint factura_ibfk_1;
+Query OK, 0 rows affected (0.0168 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura
+                                       -> add constraint foreign key(idCliente)
+                                       -> references cliente(id)
+                                       -> on delete cascade
+                                       -> on update cascade;
+Query OK, 6 rows affected (0.0850 sec)
+
+Records: 6  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL >
