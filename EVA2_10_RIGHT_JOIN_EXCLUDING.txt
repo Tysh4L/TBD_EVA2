@@ -1,0 +1,246 @@
+EVA2_10_RIGHT_JOIN_EXCLUDING
+
+MySQL Shell 8.0.38
+
+Copyright (c) 2016, 2024, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 8
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > use tbd_e2;
+Default schema set to `tbd_e2`.
+Fetching global names, object names from `tbd_e2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > show tables;
++------------------+
+| Tables_in_tbd_e2 |
++------------------+
+| cliente          |
+| factura          |
+| factura_detalle  |
+| producto         |
+| tablaa           |
+| tablab           |
++------------------+
+6 rows in set (0.0013 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, a.apellido, sum()c                                         select a.nombre, a.apellid
+                                       -> ^C
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, a.apellido,
+                                       -> sum(c.cantidad * d.precio) as
+                                       -> total from cliente a
+                                       -> left join factura_detalle c on
+                                       -> b.folio = c.idfactura
+                                       -> left join producto d on
+                                       -> c.idproducto = d.id
+                                       -> group by a.id
+                                       -> order by a.apellido, a.nombre;
+ERROR: 1054 (42S22): Unknown column 'b.folio' in 'on clause'
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, a.apellido, sum(c.cantidad * d.precio) as total from cliente a left join factura b on a.id = b.idcliente left join factura_detalle c on b.folio = c.idfactura left join producto d on c.idproducto = d.id group by a.id ordery by a.apellido, a.nombre;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ordery by a.apellido, a.nombre' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, a.apellido, sum(c.cantidad * d.precio) as total from cliente a left join factura b on a.id = b.idcliente left join factura_detalle c on b.folio = c.idfactura left join producto d on c.idproducto = d.id group by a.id order by a.apellido, a.nombre;
++---------+------------+----------+
+| nombre  | apellido   | total    |
++---------+------------+----------+
+| Isaac   | Guzman     |    20.00 |
+| Quiru   | Medina     |  1000.00 |
+| Victor  | Novavolver |   350.00 |
+| Juan    | Perez      |  2000.00 |
+| Jorgito | Quiros     | 22400.00 |
+| Alan    | Rivas      |  2150.00 |
+| XXX     | YYY        |  2350.00 |
++---------+------------+----------+
+7 rows in set (0.0224 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > show cliente;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cliente' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from cliente;
++----+---------+------------+--------------+
+| id | nombre  | apellido   | rfc          |
++----+---------+------------+--------------+
+|  7 | XXX     | YYY        | ZZZ235745    |
+| 33 | Juan    | Perez      | ASDF315A4DFX |
+| 34 | Alan    | Rivas      | RIPACH032498 |
+| 35 | Victor  | Novavolver | VINO012923FC |
+| 36 | Quiru   | Medina     | QUMED0124CH  |
+| 37 | Isaac   | Guzman     | ISI0191920   |
+| 38 | Jorgito | Quiros     | JORFQICH0324 |
++----+---------+------------+--------------+
+7 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura;
++-------+-----------+
+| folio | idCliente |
++-------+-----------+
+|    11 |         7 |
+|    12 |         7 |
+|    13 |         7 |
+|    14 |         7 |
+|    15 |        33 |
+|    16 |        34 |
+|    17 |        35 |
+|    18 |        36 |
+|    19 |        37 |
+|    20 |        38 |
++-------+-----------+
+10 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from producto;
++----+---------+---------+
+| id | nombre  | precio  |
++----+---------+---------+
+|  1 | Elote   |   20.00 |
+|  2 | Nachos  |   50.00 |
+|  4 | Helado  |  100.00 |
+|  5 | Tacos   |   64.00 |
+|  6 | iPhone  |    1.00 |
+|  7 | Android | 1000.00 |
+|  8 | Dogos   | 1500.00 |
++----+---------+---------+
+7 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura_detalle;
++----+-----------+------------+----------+
+| id | idFactura | idProducto | cantidad |
++----+-----------+------------+----------+
+|  7 |        11 |          1 |       50 |
+|  8 |        11 |          2 |       25 |
+| 10 |        14 |          1 |        5 |
+| 11 |        15 |          7 |        2 |
+| 12 |        16 |          5 |       10 |
+| 13 |        16 |          6 |       10 |
+| 14 |        16 |          8 |        1 |
+| 15 |        17 |          4 |        3 |
+| 16 |        17 |          2 |        1 |
+| 17 |        18 |          7 |        1 |
+| 18 |        19 |          1 |        1 |
+| 19 |        20 |          4 |       14 |
+| 20 |        20 |          8 |       14 |
++----+-----------+------------+----------+
+13 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, sum(a.precio * b.cantidad) as totalVen from producto a left join factura_detalle b on a.id = b.idproducto;
+ERROR: 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'tbd_e2.a.nombre'; this is incompatible with sql_mode=only_full_group_by
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, a.apellido, ifnull(sum(c.cantidad * d.precio),0) as total from cliente a left join factura b on a.id = b.idcliente left join factura_detalle c on b.folio = c.idfactura left join producto d on c.idproducto = d.id group by a.id order by a.apellido, a.nombre;
++---------+------------+----------+
+| nombre  | apellido   | total    |
++---------+------------+----------+
+| Isaac   | Guzman     |    20.00 |
+| Quiru   | Medina     |  1000.00 |
+| Victor  | Novavolver |   350.00 |
+| Juan    | Perez      |  2000.00 |
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > ^C
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, a.apellido, ifnull(sum(c.cantidad * d.precio),0) as total from cliente a left join factura b on a
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > e c on b.folio = c.idfactura left join producto d on c.idproducto = d.id group by a.id order by a.apellido, a.nomb
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, ifnull(sum(a.precio * b.cantidad),0) as totalVen from producto a left join factura_detalle b on a
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, ifnull(sum(a.precio * b.cantidad),0) as totalVen from producto a left join factura_detalle b on a
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, ifnull(sum(a.precio * b.cantidad),0) as totalVen from producto a left join factura_detalle b on a
+ MySQL  localhost:3306 ssl  tbd_e2  SQL >
+ MySQL  localhost:3306 ssl  tbd_e2  SQL >
+ MySQL  localhost:3306 ssl  tbd_e2  SQL >
+ MySQL  localhost:3306 ssl  tbd_e2  SQL >
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, ifnull(sum(b.cantidad),0) as vendidos, ifnull(sum(a.precio * b.cantidad),0) as totalVen from producto a left join factura_detalle b on a.id = b.idproducto order by nombre;
+ERROR: 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'tbd_e2.a.nombre'; this is incompatible with sql_mode=only_full_group_by
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, ifnull(sum(b.cantidad),0) as vendidos, ifnull(sum(a.precio * b.cantidad),0) as totalVen from producto a left join factura_detalle b on a.id = b.idproducto group by a.id order by nombre;
++---------+----------+----------+
+| nombre  | vendidos | totalVen |
++---------+----------+----------+
+| Android |        3 |  3000.00 |
+| Dogos   |       15 | 22500.00 |
+| Elote   |       56 |  1120.00 |
+| Helado  |       17 |  1700.00 |
+| iPhone  |       10 |    10.00 |
+| Nachos  |       26 |  1300.00 |
+| Tacos   |       10 |   640.00 |
++---------+----------+----------+
+7 rows in set (0.0014 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > create table tablaA(
+                                       -> int id key_autoincrement, nombre varchar(50));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int id key_autoincrement, nombre varchar(50))' at line 2
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from tablaa;
++----+--------+
+| id | nombre |
++----+--------+
+|  1 | A      |
+|  2 | B      |
+|  3 | C      |
+|  4 | D      |
++----+--------+
+4 rows in set (0.0068 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from tablab;
++----+--------+
+| id | nombre |
++----+--------+
+|  1 | X      |
+|  2 | Y      |
+|  3 | Z      |
+|  4 | A      |
+|  5 | B      |
++----+--------+
+5 rows in set (0.0063 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > create tabla bb(
+                                       -> id int auto_increment, idtablaa int^C
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > create table bb(id int key_autoincrement, idtablaa int, nombre varchar(50));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key_autoincrement, idtablaa int, nombre varchar(50))' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > create table tablabb(id int key auto_increment, idtablaa int, nombre varchar(50));
+Query OK, 0 rows affected (0.0645 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from tablaa;
++----+--------+
+| id | nombre |
++----+--------+
+|  1 | A      |
+|  2 | B      |
+|  3 | C      |
+|  4 | D      |
++----+--------+
+4 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into tablabb(idtablaa, nombre)
+                                       -> values(1,"xxxx"),(2,"yyyy"),(2,"zzzz"),(3,"dddd"),(null,"rrrr"),(null,"tttt");
+Query OK, 6 rows affected (0.0137 sec)
+
+Records: 6  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, b.nombre from tablaa a left join tablabb b on a.id = b.idtablaa;
++--------+--------+
+| nombre | nombre |
++--------+--------+
+| A      | xxxx   |
+| B      | zzzz   |
+| B      | yyyy   |
+| C      | dddd   |
+| D      | NULL   |
++--------+--------+
+5 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, b.nombre from tablaa a right join tablabb b on a.id = b.idtablaa;
++--------+--------+
+| nombre | nombre |
++--------+--------+
+| A      | xxxx   |
+| B      | yyyy   |
+| B      | zzzz   |
+| C      | dddd   |
+| NULL   | rrrr   |
+| NULL   | tttt   |
++--------+--------+
+6 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, a.apellido, b.idfolio from cliente a left join factura b on a.id = b.idcliente;
+ERROR: 1054 (42S22): Unknown column 'b.idfolio' in 'field list'
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, a.apellido, b.folio from cliente a left join factura b on a.id = b.idcliente;
++---------+------------+-------+
+| nombre  | apellido   | folio |
++---------+------------+-------+
+| XXX     | YYY        |    11 |
+| XXX     | YYY        |    12 |
+| XXX     | YYY        |    13 |
+| XXX     | YYY        |    14 |
+| Juan    | Perez      |    15 |
+| Alan    | Rivas      |    16 |
+| Victor  | Novavolver |    17 |
+| Quiru   | Medina     |    18 |
+| Isaac   | Guzman     |    19 |
+| Jorgito | Quiros     |    20 |
++---------+------------+-------+
+10 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select a.nombre, a.apellido, b.folio from cliente a left join factura b on a.id = b.idcliente where b.folio is null;
+Empty set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL >
