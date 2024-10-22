@@ -1,0 +1,766 @@
+EVA2_12_USERS
+
+MySQL Shell 8.0.38
+
+Copyright (c) 2016, 2024, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 8
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > use empresa;
+Default schema set to `empresa`.
+Fetching global names, object names from `empresa` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  empresa  SQL > Select employee_id, first_name, last_name, manager_id from employees;
++-------------+-------------+-------------+------------+
+| employee_id | first_name  | last_name   | manager_id |
++-------------+-------------+-------------+------------+
+|         100 | Steven      | King        |          0 |
+|         101 | Neena       | Kochhar     |        100 |
+|         102 | Lex         | De Haan     |        100 |
+|         103 | Alexander   | Hunold      |        102 |
+|         104 | Bruce       | Ernst       |        103 |
+|         105 | David       | Austin      |        103 |
+|         106 | Valli       | Pataballa   |        103 |
+|         107 | Diana       | Lorentz     |        103 |
+|         108 | Nancy       | Greenberg   |        101 |
+|         109 | Daniel      | Faviet      |        108 |
+|         110 | John        | Chen        |        108 |
+|         111 | Ismael      | Sciarra     |        108 |
+|         112 | Jose Manuel | Urman       |        108 |
+|         113 | Luis        | Popp        |        108 |
+|         114 | Den         | Raphaely    |        100 |
+|         115 | Alexander   | Khoo        |        114 |
+|         116 | Shelli      | Baida       |        114 |
+|         117 | Sigal       | Tobias      |        114 |
+|         118 | Guy         | Himuro      |        114 |
+|         119 | Karen       | Colmenares  |        114 |
+|         120 | Matthew     | Weiss       |        100 |
+|         121 | Adam        | Fripp       |        100 |
+|         122 | Payam       | Kaufling    |        100 |
+|         123 | Shanta      | Vollman     |        100 |
+|         124 | Kevin       | Mourgos     |        100 |
+|         125 | Julia       | Nayer       |        120 |
+|         126 | Irene       | Mikkilineni |        120 |
+|         127 | James       | Landry      |        120 |
+|         128 | Steven      | Markle      |        120 |
+|         129 | Laura       | Bissot      |        121 |
+|         130 | Mozhe       | Atkinson    |        121 |
+|         131 | James       | Marlow      |        121 |
+|         132 | TJ          | Olson       |        121 |
+|         133 | Jason       | Mallin      |        122 |
+|         134 | Michael     | Rogers      |        122 |
+|         135 | Ki          | Gee         |        122 |
+|         136 | Hazel       | Philtanker  |        122 |
+|         137 | Renske      | Ladwig      |        123 |
+|         138 | Stephen     | Stiles      |        123 |
+|         139 | John        | Seo         |        123 |
+|         140 | Joshua      | Patel       |        123 |
+|         141 | Trenna      | Rajs        |        124 |
+|         142 | Curtis      | Davies      |        124 |
+|         143 | Randall     | Matos       |        124 |
+|         144 | Peter       | Vargas      |        124 |
+|         145 | John        | Russell     |        100 |
+|         146 | Karen       | Partners    |        100 |
+|         147 | Alberto     | Errazuriz   |        100 |
+|         148 | Gerald      | Cambrault   |        100 |
+|         149 | Eleni       | Zlotkey     |        100 |
+|         150 | Peter       | Tucker      |        145 |
+|         151 | David       | Bernstein   |        145 |
+|         152 | Peter       | Hall        |        145 |
+|         153 | Christopher | Olsen       |        145 |
+|         154 | Nanette     | Cambrault   |        145 |
+|         155 | Oliver      | Tuvault     |        145 |
+|         156 | Janette     | King        |        146 |
+|         157 | Patrick     | Sully       |        146 |
+|         158 | Allan       | McEwen      |        146 |
+|         159 | Lindsey     | Smith       |        146 |
+|         160 | Louise      | Doran       |        146 |
+|         161 | Sarath      | Sewall      |        146 |
+|         162 | Clara       | Vishney     |        147 |
+|         163 | Danielle    | Greene      |        147 |
+|         164 | Mattea      | Marvins     |        147 |
+|         165 | David       | Lee         |        147 |
+|         166 | Sundar      | Ande        |        147 |
+|         167 | Amit        | Banda       |        147 |
+|         168 | Lisa        | Ozer        |        148 |
+|         169 | Harrison    | Bloom       |        148 |
+|         170 | Tayler      | Fox         |        148 |
+|         171 | William     | Smith       |        148 |
+|         172 | Elizabeth   | Bates       |        148 |
+|         173 | Sundita     | Kumar       |        148 |
+|         174 | Ellen       | Abel        |        149 |
+|         175 | Alyssa      | Hutton      |        149 |
+|         176 | Jonathon    | Taylor      |        149 |
+|         177 | Jack        | Livingston  |        149 |
+|         178 | Kimberely   | Grant       |        149 |
+|         179 | Charles     | Johnson     |        149 |
+|         180 | Winston     | Taylor      |        120 |
+|         181 | Jean        | Fleaur      |        120 |
+|         182 | Martha      | Sullivan    |        120 |
+|         183 | Girard      | Geoni       |        120 |
+|         184 | Nandita     | Sarchand    |        121 |
+|         185 | Alexis      | Bull        |        121 |
+|         186 | Julia       | Dellinger   |        121 |
+|         187 | Anthony     | Cabrio      |        121 |
+|         188 | Kelly       | Chung       |        122 |
+|         189 | Jennifer    | Dilly       |        122 |
+|         190 | Timothy     | Gates       |        122 |
+|         191 | Randall     | Perkins     |        122 |
+|         192 | Sarah       | Bell        |        123 |
+|         193 | Britney     | Everett     |        123 |
+|         194 | Samuel      | McCain      |        123 |
+|         195 | Vance       | Jones       |        123 |
+|         196 | Alana       | Walsh       |        124 |
+|         197 | Kevin       | Feeney      |        124 |
+|         198 | Donald      | OConnell    |        124 |
+|         199 | Douglas     | Grant       |        124 |
+|         200 | Jennifer    | Whalen      |        101 |
+|         201 | Michael     | Hartstein   |        100 |
+|         202 | Pat         | Fay         |        201 |
+|         203 | Susan       | Mavris      |        101 |
+|         204 | Hermann     | Baer        |        101 |
+|         205 | Shelley     | Higgins     |        101 |
+|         206 | William     | Gietz       |        205 |
++-------------+-------------+-------------+------------+
+107 rows in set (0.0140 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > SELECT a.last_name, a.first_name, b.last_name, b.first_name
+                                        -> FROM employees a
+                                        -> INNER JOIN employees b
+                                        -> ON a.employee_id = b.manager_id;
++-----------+------------+-------------+-------------+
+| last_name | first_name | last_name   | first_name  |
++-----------+------------+-------------+-------------+
+| King      | Steven     | Kochhar     | Neena       |
+| King      | Steven     | De Haan     | Lex         |
+| De Haan   | Lex        | Hunold      | Alexander   |
+| Hunold    | Alexander  | Ernst       | Bruce       |
+| Hunold    | Alexander  | Austin      | David       |
+| Hunold    | Alexander  | Pataballa   | Valli       |
+| Hunold    | Alexander  | Lorentz     | Diana       |
+| Kochhar   | Neena      | Greenberg   | Nancy       |
+| Greenberg | Nancy      | Faviet      | Daniel      |
+| Greenberg | Nancy      | Chen        | John        |
+| Greenberg | Nancy      | Sciarra     | Ismael      |
+| Greenberg | Nancy      | Urman       | Jose Manuel |
+| Greenberg | Nancy      | Popp        | Luis        |
+| King      | Steven     | Raphaely    | Den         |
+| Raphaely  | Den        | Khoo        | Alexander   |
+| Raphaely  | Den        | Baida       | Shelli      |
+| Raphaely  | Den        | Tobias      | Sigal       |
+| Raphaely  | Den        | Himuro      | Guy         |
+| Raphaely  | Den        | Colmenares  | Karen       |
+| King      | Steven     | Weiss       | Matthew     |
+| King      | Steven     | Fripp       | Adam        |
+| King      | Steven     | Kaufling    | Payam       |
+| King      | Steven     | Vollman     | Shanta      |
+| King      | Steven     | Mourgos     | Kevin       |
+| Weiss     | Matthew    | Nayer       | Julia       |
+| Weiss     | Matthew    | Mikkilineni | Irene       |
+| Weiss     | Matthew    | Landry      | James       |
+| Weiss     | Matthew    | Markle      | Steven      |
+| Fripp     | Adam       | Bissot      | Laura       |
+| Fripp     | Adam       | Atkinson    | Mozhe       |
+| Fripp     | Adam       | Marlow      | James       |
+| Fripp     | Adam       | Olson       | TJ          |
+| Kaufling  | Payam      | Mallin      | Jason       |
+| Kaufling  | Payam      | Rogers      | Michael     |
+| Kaufling  | Payam      | Gee         | Ki          |
+| Kaufling  | Payam      | Philtanker  | Hazel       |
+| Vollman   | Shanta     | Ladwig      | Renske      |
+| Vollman   | Shanta     | Stiles      | Stephen     |
+| Vollman   | Shanta     | Seo         | John        |
+| Vollman   | Shanta     | Patel       | Joshua      |
+| Mourgos   | Kevin      | Rajs        | Trenna      |
+| Mourgos   | Kevin      | Davies      | Curtis      |
+| Mourgos   | Kevin      | Matos       | Randall     |
+| Mourgos   | Kevin      | Vargas      | Peter       |
+| King      | Steven     | Russell     | John        |
+| King      | Steven     | Partners    | Karen       |
+| King      | Steven     | Errazuriz   | Alberto     |
+| King      | Steven     | Cambrault   | Gerald      |
+| King      | Steven     | Zlotkey     | Eleni       |
+| Russell   | John       | Tucker      | Peter       |
+| Russell   | John       | Bernstein   | David       |
+| Russell   | John       | Hall        | Peter       |
+| Russell   | John       | Olsen       | Christopher |
+| Russell   | John       | Cambrault   | Nanette     |
+| Russell   | John       | Tuvault     | Oliver      |
+| Partners  | Karen      | King        | Janette     |
+| Partners  | Karen      | Sully       | Patrick     |
+| Partners  | Karen      | McEwen      | Allan       |
+| Partners  | Karen      | Smith       | Lindsey     |
+| Partners  | Karen      | Doran       | Louise      |
+| Partners  | Karen      | Sewall      | Sarath      |
+| Errazuriz | Alberto    | Vishney     | Clara       |
+| Errazuriz | Alberto    | Greene      | Danielle    |
+| Errazuriz | Alberto    | Marvins     | Mattea      |
+| Errazuriz | Alberto    | Lee         | David       |
+| Errazuriz | Alberto    | Ande        | Sundar      |
+| Errazuriz | Alberto    | Banda       | Amit        |
+| Cambrault | Gerald     | Ozer        | Lisa        |
+| Cambrault | Gerald     | Bloom       | Harrison    |
+| Cambrault | Gerald     | Fox         | Tayler      |
+| Cambrault | Gerald     | Smith       | William     |
+| Cambrault | Gerald     | Bates       | Elizabeth   |
+| Cambrault | Gerald     | Kumar       | Sundita     |
+| Zlotkey   | Eleni      | Abel        | Ellen       |
+| Zlotkey   | Eleni      | Hutton      | Alyssa      |
+| Zlotkey   | Eleni      | Taylor      | Jonathon    |
+| Zlotkey   | Eleni      | Livingston  | Jack        |
+| Zlotkey   | Eleni      | Grant       | Kimberely   |
+| Zlotkey   | Eleni      | Johnson     | Charles     |
+| Weiss     | Matthew    | Taylor      | Winston     |
+| Weiss     | Matthew    | Fleaur      | Jean        |
+| Weiss     | Matthew    | Sullivan    | Martha      |
+| Weiss     | Matthew    | Geoni       | Girard      |
+| Fripp     | Adam       | Sarchand    | Nandita     |
+| Fripp     | Adam       | Bull        | Alexis      |
+| Fripp     | Adam       | Dellinger   | Julia       |
+| Fripp     | Adam       | Cabrio      | Anthony     |
+| Kaufling  | Payam      | Chung       | Kelly       |
+| Kaufling  | Payam      | Dilly       | Jennifer    |
+| Kaufling  | Payam      | Gates       | Timothy     |
+| Kaufling  | Payam      | Perkins     | Randall     |
+| Vollman   | Shanta     | Bell        | Sarah       |
+| Vollman   | Shanta     | Everett     | Britney     |
+| Vollman   | Shanta     | McCain      | Samuel      |
+| Vollman   | Shanta     | Jones       | Vance       |
+| Mourgos   | Kevin      | Walsh       | Alana       |
+| Mourgos   | Kevin      | Feeney      | Kevin       |
+| Mourgos   | Kevin      | OConnell    | Donald      |
+| Mourgos   | Kevin      | Grant       | Douglas     |
+| Kochhar   | Neena      | Whalen      | Jennifer    |
+| King      | Steven     | Hartstein   | Michael     |
+| Hartstein | Michael    | Fay         | Pat         |
+| Kochhar   | Neena      | Mavris      | Susan       |
+| Kochhar   | Neena      | Baer        | Hermann     |
+| Kochhar   | Neena      | Higgins     | Shelley     |
+| Higgins   | Shelley    | Gietz       | William     |
++-----------+------------+-------------+-------------+
+106 rows in set (0.0014 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| employees          |
+| empresa            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| tbd_e1             |
+| tbd_e2             |
+| world_x            |
++--------------------+
+10 rows in set (0.0055 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > use mysql;
+Default schema set to `mysql`.
+Fetching global names, object names from `mysql` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  mysql  SQL > show tables;
++------------------------------------------------------+
+| Tables_in_mysql                                      |
++------------------------------------------------------+
+| columns_priv                                         |
+| component                                            |
+| db                                                   |
+| default_roles                                        |
+| engine_cost                                          |
+| func                                                 |
+| general_log                                          |
+| global_grants                                        |
+| gtid_executed                                        |
+| help_category                                        |
+| help_keyword                                         |
+| help_relation                                        |
+| help_topic                                           |
+| innodb_index_stats                                   |
+| innodb_table_stats                                   |
+| ndb_binlog_index                                     |
+| password_history                                     |
+| plugin                                               |
+| procs_priv                                           |
+| proxies_priv                                         |
+| replication_asynchronous_connection_failover         |
+| replication_asynchronous_connection_failover_managed |
+| replication_group_configuration_version              |
+| replication_group_member_actions                     |
+| role_edges                                           |
+| server_cost                                          |
+| servers                                              |
+| slave_master_info                                    |
+| slave_relay_log_info                                 |
+| slave_worker_info                                    |
+| slow_log                                             |
+| tables_priv                                          |
+| time_zone                                            |
+| time_zone_leap_second                                |
+| time_zone_name                                       |
+| time_zone_transition                                 |
+| time_zone_transition_type                            |
+| user                                                 |
++------------------------------------------------------+
+38 rows in set (0.0021 sec)
+ MySQL  localhost:3306 ssl  mysql  SQL > desc user;
++--------------------------+-----------------------------------+------+-----+-----------------------+-------+
+| Field                    | Type                              | Null | Key | Default               | Extra |
++--------------------------+-----------------------------------+------+-----+-----------------------+-------+
+| Host                     | char(255)                         | NO   | PRI |                       |       |
+| User                     | char(32)                          | NO   | PRI |                       |       |
+| Select_priv              | enum('N','Y')                     | NO   |     | N                     |       |
+| Insert_priv              | enum('N','Y')                     | NO   |     | N                     |       |
+| Update_priv              | enum('N','Y')                     | NO   |     | N                     |       |
+| Delete_priv              | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_priv              | enum('N','Y')                     | NO   |     | N                     |       |
+| Drop_priv                | enum('N','Y')                     | NO   |     | N                     |       |
+| Reload_priv              | enum('N','Y')                     | NO   |     | N                     |       |
+| Shutdown_priv            | enum('N','Y')                     | NO   |     | N                     |       |
+| Process_priv             | enum('N','Y')                     | NO   |     | N                     |       |
+| File_priv                | enum('N','Y')                     | NO   |     | N                     |       |
+| Grant_priv               | enum('N','Y')                     | NO   |     | N                     |       |
+| References_priv          | enum('N','Y')                     | NO   |     | N                     |       |
+| Index_priv               | enum('N','Y')                     | NO   |     | N                     |       |
+| Alter_priv               | enum('N','Y')                     | NO   |     | N                     |       |
+| Show_db_priv             | enum('N','Y')                     | NO   |     | N                     |       |
+| Super_priv               | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_tmp_table_priv    | enum('N','Y')                     | NO   |     | N                     |       |
+| Lock_tables_priv         | enum('N','Y')                     | NO   |     | N                     |       |
+| Execute_priv             | enum('N','Y')                     | NO   |     | N                     |       |
+| Repl_slave_priv          | enum('N','Y')                     | NO   |     | N                     |       |
+| Repl_client_priv         | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_view_priv         | enum('N','Y')                     | NO   |     | N                     |       |
+| Show_view_priv           | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_routine_priv      | enum('N','Y')                     | NO   |     | N                     |       |
+| Alter_routine_priv       | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_user_priv         | enum('N','Y')                     | NO   |     | N                     |       |
+| Event_priv               | enum('N','Y')                     | NO   |     | N                     |       |
+| Trigger_priv             | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_tablespace_priv   | enum('N','Y')                     | NO   |     | N                     |       |
+| ssl_type                 | enum('','ANY','X509','SPECIFIED') | NO   |     |                       |       |
+| ssl_cipher               | blob                              | NO   |     | NULL                  |       |
+| x509_issuer              | blob                              | NO   |     | NULL                  |       |
+| x509_subject             | blob                              | NO   |     | NULL                  |       |
+| max_questions            | int unsigned                      | NO   |     | 0                     |       |
+| max_updates              | int unsigned                      | NO   |     | 0                     |       |
+| max_connections          | int unsigned                      | NO   |     | 0                     |       |
+| max_user_connections     | int unsigned                      | NO   |     | 0                     |       |
+| plugin                   | char(64)                          | NO   |     | caching_sha2_password |       |
+| authentication_string    | text                              | YES  |     | NULL                  |       |
+| password_expired         | enum('N','Y')                     | NO   |     | N                     |       |
+| password_last_changed    | timestamp                         | YES  |     | NULL                  |       |
+| password_lifetime        | smallint unsigned                 | YES  |     | NULL                  |       |
+| account_locked           | enum('N','Y')                     | NO   |     | N                     |       |
+| Create_role_priv         | enum('N','Y')                     | NO   |     | N                     |       |
+| Drop_role_priv           | enum('N','Y')                     | NO   |     | N                     |       |
+| Password_reuse_history   | smallint unsigned                 | YES  |     | NULL                  |       |
+| Password_reuse_time      | smallint unsigned                 | YES  |     | NULL                  |       |
+| Password_require_current | enum('N','Y')                     | YES  |     | NULL                  |       |
+| User_attributes          | json                              | YES  |     | NULL                  |       |
++--------------------------+-----------------------------------+------+-----+-----------------------+-------+
+51 rows in set (0.0026 sec)
+ MySQL  localhost:3306 ssl  mysql  SQL > select host, user from user;
++-----------+------------------+
+| host      | user             |
++-----------+------------------+
+| localhost | mysql.infoschema |
+| localhost | mysql.session    |
+| localhost | mysql.sys        |
+| localhost | root             |
++-----------+------------------+
+4 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  mysql  SQL > CREATE USER 'prueba'@'localhost'
+                                      -> identified by '1235';
+Query OK, 0 rows affected (0.0493 sec)
+ MySQL  localhost:3306 ssl  mysql  SQL > \connect --mc prueba@localhost
+Creating a Classic session to 'prueba@localhost'
+Please provide the password for 'prueba@localhost': ****
+MySQL Error 1045 (28000): Access denied for user 'prueba'@'localhost' (using password: YES)
+ MySQL  localhost:3306 ssl  mysql  SQL > \connect --mc prueba@localhost
+Creating a Classic session to 'prueba@localhost'
+Please provide the password for 'prueba@localhost': ****
+Save password for 'prueba@localhost'? [Y]es/[N]o/Ne[v]er (default No): n
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 10
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| performance_schema |
++--------------------+
+2 rows in set (0.0014 sec)
+ MySQL  localhost:3306 ssl  SQL > CREATE DATABASE pruebota;
+ERROR: 1044 (42000): Access denied for user 'prueba'@'localhost' to database 'pruebota'
+ MySQL  localhost:3306 ssl  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 11
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > DROP USER prueba@localhost;
+Query OK, 0 rows affected (0.0127 sec)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc prueba@localhost
+Creating a Classic session to 'prueba@localhost'
+Please provide the password for 'prueba@localhost': ****
+MySQL Error 1045 (28000): Access denied for user 'prueba'@'localhost' (using password: YES)
+ MySQL  localhost:3306 ssl  SQL > CREATE USER 'prueba'@'localhost'  identified by '1234';
+Query OK, 0 rows affected (0.0160 sec)
+ MySQL  localhost:3306 ssl  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| employees          |
+| empresa            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| tbd_e1             |
+| tbd_e2             |
+| world_x            |
++--------------------+
+10 rows in set (0.0019 sec)
+ MySQL  localhost:3306 ssl  SQL > GRANT ALL ON * TO 'prueba'@'localhost';
+ERROR: 1046 (3D000): No database selected
+ MySQL  localhost:3306 ssl  SQL > GRANT ALL ON *.* TO 'prueba'@'localhost';
+Query OK, 0 rows affected (0.0133 sec)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc prueba@localhost
+Creating a Classic session to 'prueba@localhost'
+Please provide the password for 'prueba@localhost': ****
+Save password for 'prueba@localhost'? [Y]es/[N]o/Ne[v]er (default No): n
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 13
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| employees          |
+| empresa            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| tbd_e1             |
+| tbd_e2             |
+| world_x            |
++--------------------+
+10 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  SQL > SHOW GRANTS FOR 'prueba'@'localhost';
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Grants for prueba@localhost
+
+
+
+
+
+
+
+
+                                                                   |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE, CREATE ROLE, DROP ROLE ON *.* TO `prueba`@`localhost`
+
+
+
+                                                                   |
+| GRANT APPLICATION_PASSWORD_ADMIN,AUDIT_ABORT_EXEMPT,AUDIT_ADMIN,AUTHENTICATION_POLICY_ADMIN,BACKUP_ADMIN,BINLOG_ADMIN,BINLOG_ENCRYPTION_ADMIN,CLONE_ADMIN,CONNECTION_ADMIN,ENCRYPTION_KEY_ADMIN,FIREWALL_EXEMPT,FLUSH_OPTIMIZER_COSTS,FLUSH_STATUS,FLUSH_TABLES,FLUSH_USER_RESOURCES,GROUP_REPLICATION_ADMIN,GROUP_REPLICATION_STREAM,INNODB_REDO_LOG_ARCHIVE,INNODB_REDO_LOG_ENABLE,PASSWORDLESS_USER_ADMIN,PERSIST_RO_VARIABLES_ADMIN,REPLICATION_APPLIER,REPLICATION_SLAVE_ADMIN,RESOURCE_GROUP_ADMIN,RESOURCE_GROUP_USER,ROLE_ADMIN,SENSITIVE_VARIABLES_OBSERVER,SERVICE_CONNECTION_ADMIN,SESSION_VARIABLES_ADMIN,SET_USER_ID,SHOW_ROUTINE,SYSTEM_USER,SYSTEM_VARIABLES_ADMIN,TABLE_ENCRYPTION_ADMIN,TELEMETRY_LOG_ADMIN,XA_RECOVER_ADMIN ON *.* TO `prueba`@`localhost` |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+2 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc root@localhost;
+Creating a Classic session to 'root@localhost;'
+Please provide the password for 'root@localhost;': *********
+MySQL Error 2005 (HY000): Unknown MySQL server host 'localhost;' (11001)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc root@localhost;
+Creating a Classic session to 'root@localhost;'
+Please provide the password for 'root@localhost;': *********
+MySQL Error 2005 (HY000): Unknown MySQL server host 'localhost;' (11001)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc root@localhost;
+Creating a Classic session to 'root@localhost;'
+Please provide the password for 'root@localhost;': *********
+MySQL Error 2005 (HY000): Unknown MySQL server host 'localhost;' (11001)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc root@localhost;
+Creating a Classic session to 'root@localhost;'
+Please provide the password for 'root@localhost;': *********
+MySQL Error 2005 (HY000): Unknown MySQL server host 'localhost;' (11001)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 14
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > REVOKE ALL ON *.* FROM 'prueba'@'localhost';
+Query OK, 0 rows affected (0.0170 sec)
+ MySQL  localhost:3306 ssl  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| employees          |
+| empresa            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| tbd_e1             |
+| tbd_e2             |
+| world_x            |
++--------------------+
+10 rows in set (0.0015 sec)
+ MySQL  localhost:3306 ssl  SQL > GRANT ALL ON empresa.* TO 'prueba'@'localhost';
+Query OK, 0 rows affected (0.0083 sec)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc prueba@localhost
+Creating a Classic session to 'prueba@localhost'
+Please provide the password for 'prueba@localhost': ****
+Save password for 'prueba@localhost'? [Y]es/[N]o/Ne[v]er (default No): n
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 15
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| empresa            |
+| information_schema |
+| performance_schema |
++--------------------+
+3 rows in set (0.0013 sec)
+ MySQL  localhost:3306 ssl  SQL > use empresa;
+Default schema set to `empresa`.
+Fetching global names, object names from `empresa` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  empresa  SQL > show tables;
++-------------------+
+| Tables_in_empresa |
++-------------------+
+| countries         |
+| departments       |
+| employees         |
+| job_history       |
+| jobs              |
+| locations         |
+| regions           |
++-------------------+
+7 rows in set (0.0017 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > CREATE TABLE prueba(id int);
+Query OK, 0 rows affected (0.0555 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > \connect --mc prueba@localhost
+Creating a Classic session to 'prueba@localhost'
+Please provide the password for 'prueba@localhost': *********
+MySQL Error 1045 (28000): Access denied for user 'prueba'@'localhost' (using password: YES)
+ MySQL  localhost:3306 ssl  empresa  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 17
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > CREATE USER 'prueba2'@'localhost' identified by '1234';
+Query OK, 0 rows affected (0.0168 sec)
+ MySQL  localhost:3306 ssl  SQL > GRANT ALL ON empresa.countries TO 'prueba2'@'localhost';
+Query OK, 0 rows affected (0.0073 sec)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc prueba2@localhost
+Creating a Classic session to 'prueba2@localhost'
+Please provide the password for 'prueba2@localhost': ****
+Save password for 'prueba2@localhost'? [Y]es/[N]o/Ne[v]er (default No): n
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 18
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| empresa            |
+| information_schema |
+| performance_schema |
++--------------------+
+3 rows in set (0.0013 sec)
+ MySQL  localhost:3306 ssl  SQL > use empresa;
+Default schema set to `empresa`.
+Fetching global names, object names from `empresa` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  empresa  SQL > show tables;
++-------------------+
+| Tables_in_empresa |
++-------------------+
+| countries         |
++-------------------+
+1 row in set (0.0015 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > desc countries;
++--------------+---------------+------+-----+---------+-------+
+| Field        | Type          | Null | Key | Default | Extra |
++--------------+---------------+------+-----+---------+-------+
+| COUNTRY_ID   | varchar(2)    | NO   | PRI | NULL    |       |
+| COUNTRY_NAME | varchar(40)   | YES  |     | NULL    |       |
+| REGION_ID    | decimal(10,0) | YES  | MUL | NULL    |       |
++--------------+---------------+------+-----+---------+-------+
+3 rows in set (0.0032 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > SHOW CREATE TABLE countries;
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table     | Create Table
+                                                                                                                                           |
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| countries | CREATE TABLE `countries` (
+  `COUNTRY_ID` varchar(2) NOT NULL,
+  `COUNTRY_NAME` varchar(40) DEFAULT NULL,
+  `REGION_ID` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`COUNTRY_ID`),
+  KEY `COUNTR_REG_FK` (`REGION_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0074 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > INSERT INTO countries (country_id, country_name)
+                                        -> VALUES ('PG', 'Pangea');
+Query OK, 1 row affected (0.0238 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > SELECT * countries;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'countries' at line 1
+ MySQL  localhost:3306 ssl  empresa  SQL > SELECT * FROM countries;
++------------+--------------------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID |
++------------+--------------------------+-----------+
+| AR         | Argentina                |         2 |
+| AU         | Australia                |         3 |
+| BE         | Belgium                  |         1 |
+| BR         | Brazil                   |         2 |
+| CA         | Canada                   |         2 |
+| CH         | Switzerland              |         1 |
+| CN         | China                    |         3 |
+| DE         | Germany                  |         1 |
+| DK         | Denmark                  |         1 |
+| EG         | Egypt                    |         4 |
+| FR         | France                   |         1 |
+| HK         | HongKong                 |         3 |
+| IL         | Israel                   |         4 |
+| IN         | India                    |         3 |
+| IT         | Italy                    |         1 |
+| JP         | Japan                    |         3 |
+| KW         | Kuwait                   |         4 |
+| MX         | Mexico                   |         2 |
+| NG         | Nigeria                  |         4 |
+| NL         | Netherlands              |         1 |
+| PG         | Pangea                   |      NULL |
+| SG         | Singapore                |         3 |
+| UK         | United Kingdom           |         1 |
+| US         | United States of America |         2 |
+| ZM         | Zambia                   |         4 |
+| ZW         | Zimbabwe                 |         4 |
++------------+--------------------------+-----------+
+26 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 19
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > CREATE USER 'prueba3'@'localhost' IDENTIFIED BY '1234';
+Query OK, 0 rows affected (0.0169 sec)
+ MySQL  localhost:3306 ssl  SQL > GRANT INSERT(country_id), SELECT(country_name) ON empresa.countries TO 'prueba3'@'localhost';
+Query OK, 0 rows affected (0.0150 sec)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc prueba3@localhost
+Creating a Classic session to 'prueba3@localhost'
+Please provide the password for 'prueba3@localhost': ****
+Save password for 'prueba3@localhost'? [Y]es/[N]o/Ne[v]er (default No): n
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 20
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| empresa            |
+| information_schema |
+| performance_schema |
++--------------------+
+3 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  SQL > SHOW TABLES;
+ERROR: 1046 (3D000): No database selected
+ MySQL  localhost:3306 ssl  SQL > USE empresa;
+Default schema set to `empresa`.
+Fetching global names, object names from `empresa` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  empresa  SQL > SHOW TABLES;
++-------------------+
+| Tables_in_empresa |
++-------------------+
+| countries         |
++-------------------+
+1 row in set (0.0017 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > DROP countries;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'countries' at line 1
+ MySQL  localhost:3306 ssl  empresa  SQL > DROP TABLE countries;
+ERROR: 1142 (42000): DROP command denied to user 'prueba3'@'localhost' for table 'countries'
+ MySQL  localhost:3306 ssl  empresa  SQL > DELETE FROM countries;
+ERROR: 1142 (42000): DELETE command denied to user 'prueba3'@'localhost' for table 'countries'
+ MySQL  localhost:3306 ssl  empresa  SQL > SELECT * FROM countries;
+ERROR: 1142 (42000): SELECT command denied to user 'prueba3'@'localhost' for table 'countries'
+ MySQL  localhost:3306 ssl  empresa  SQL > SELECT country_name FROM  countries;
++--------------------------+
+| country_name             |
++--------------------------+
+| Argentina                |
+| Australia                |
+| Belgium                  |
+| Brazil                   |
+| Canada                   |
+| Switzerland              |
+| China                    |
+| Germany                  |
+| Denmark                  |
+| Egypt                    |
+| France                   |
+| HongKong                 |
+| Israel                   |
+| India                    |
+| Italy                    |
+| Japan                    |
+| Kuwait                   |
+| Mexico                   |
+| Nigeria                  |
+| Netherlands              |
+| Pangea                   |
+| Singapore                |
+| United Kingdom           |
+| United States of America |
+| Zambia                   |
+| Zimbabwe                 |
++--------------------------+
+26 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > INSERT INTO countries (country_id)
+                                        -> VALUES('VG');
+Query OK, 1 row affected (0.0095 sec)
+ MySQL  localhost:3306 ssl  empresa  SQL > INSERT INTO countries(country_name)
+                                        -> VALUES('Victor');
+ERROR: 1143 (42000): INSERT command denied to user 'prueba3'@'localhost' for column 'country_name' in table 'countries'
+ MySQL  localhost:3306 ssl  empresa  SQL >
+
+
+
+
+
+
+
