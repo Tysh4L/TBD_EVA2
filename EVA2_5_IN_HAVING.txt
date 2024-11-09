@@ -1,0 +1,1503 @@
+MySQL Shell 8.0.38
+
+Copyright (c) 2016, 2024, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 20
+Server version: 8.0.39 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > use sakila;
+Default schema set to `sakila`.
+Fetching global names, object names from `sakila` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  sakila  SQL > desc payment;
++--------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type              | Null | Key | Default           | Extra                                         |
++--------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| payment_id   | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| customer_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| staff_id     | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| rental_id    | int               | YES  | MUL | NULL              |                                               |
+| amount       | decimal(5,2)      | NO   |     | NULL              |                                               |
+| payment_date | datetime          | NO   |     | NULL              |                                               |
+| last_update  | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+7 rows in set (0.0113 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select count(*) from payment;
++----------+
+| count(*) |
++----------+
+|    16049 |
++----------+
+1 row in set (0.0282 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select sum(amount) as total, customer_id from payment group by customer_id limit 10;
++--------+-------------+
+| total  | customer_id |
++--------+-------------+
+| 118.68 |           1 |
+| 128.73 |           2 |
+| 135.74 |           3 |
+|  81.78 |           4 |
+| 144.62 |           5 |
+|  93.72 |           6 |
+| 151.67 |           7 |
+|  92.76 |           8 |
+|  89.77 |           9 |
+|  99.75 |          10 |
++--------+-------------+
+10 rows in set (0.0070 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select sum(amount) as total, customer_id from payment group by customer_id order by total asc limit 1;
++-------+-------------+
+| total | customer_id |
++-------+-------------+
+| 50.85 |         248 |
++-------+-------------+
+1 row in set (0.0451 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select sum(amount) as total, customer_id from payment group by customer_id order by total desc limit 1;
++--------+-------------+
+| total  | customer_id |
++--------+-------------+
+| 221.55 |         526 |
++--------+-------------+
+1 row in set (0.0205 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select customer_id from customer limit 10;
++-------------+
+| customer_id |
++-------------+
+|           1 |
+|           2 |
+|           3 |
+|           5 |
+|           7 |
+|          10 |
+|          12 |
+|          15 |
+|          17 |
+|          19 |
++-------------+
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select * from customer where customer_id = 256;
++-------------+----------+------------+-----------+----------------------------------+------------+--------+---------------------+---------------------+
+| customer_id | store_id | first_name | last_name | email                            | address_id | active | create_date         | last_update         |
++-------------+----------+------------+-----------+----------------------------------+------------+--------+---------------------+---------------------+
+|         256 |        2 | MABEL      | HOLLAND   | MABEL.HOLLAND@sakilacustomer.org |        261 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
++-------------+----------+------------+-----------+----------------------------------+------------+--------+---------------------+---------------------+
+1 row in set (0.0037 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select * from customer where customer_id = 248;
++-------------+----------+------------+-----------+------------------------------------+------------+--------+---------------------+---------------------+
+| customer_id | store_id | first_name | last_name | email                              | address_id | active | create_date         | last_update         |
++-------------+----------+------------+-----------+------------------------------------+------------+--------+---------------------+---------------------+
+|         248 |        1 | CAROLINE   | BOWMAN    | CAROLINE.BOWMAN@sakilacustomer.org |        252 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
++-------------+----------+------------+-----------+------------------------------------+------------+--------+---------------------+---------------------+
+1 row in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select customer_id from customer limit 10;
++-------------+
+| customer_id |
++-------------+
+|           1 |
+|           2 |
+|           3 |
+|           5 |
+|           7 |
+|          10 |
+|          12 |
+|          15 |
+|          17 |
+|          19 |
++-------------+
+10 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select distinct(customer_id) from payment limit 20;
++-------------+
+| customer_id |
++-------------+
+|           1 |
+|           2 |
+|           3 |
+|           4 |
+|           5 |
+|           6 |
+|           7 |
+|           8 |
+|           9 |
+|          10 |
+|          11 |
+|          12 |
+|          13 |
+|          14 |
+|          15 |
+|          16 |
+|          17 |
+|          18 |
+|          19 |
+|          20 |
++-------------+
+20 rows in set (0.0037 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select count(*) from customer;
++----------+
+| count(*) |
++----------+
+|      600 |
++----------+
+1 row in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > desc customer;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| customer_id | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| store_id    | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| first_name  | varchar(45)       | NO   |     | NULL              |                                               |
+| last_name   | varchar(45)       | NO   | MUL | NULL              |                                               |
+| email       | varchar(50)       | YES  |     | NULL              |                                               |
+| address_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| active      | tinyint(1)        | NO   |     | 1                 |                                               |
+| create_date | datetime          | NO   |     | NULL              |                                               |
+| last_update | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+9 rows in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > show create table customer;
++----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table    | Create Table
+
+
+
+
+
+
+        |
++----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| customer | CREATE TABLE `customer` (
+  `customer_id` smallint unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` tinyint unsigned NOT NULL,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `address_id` smallint unsigned NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `create_date` datetime NOT NULL,
+  `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`customer_id`),
+  KEY `idx_fk_store_id` (`store_id`),
+  KEY `idx_fk_address_id` (`address_id`),
+  KEY `idx_last_name` (`last_name`),
+  CONSTRAINT `fk_customer_address` FOREIGN KEY (`address_id`) REFERENCES `address` (`address_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_customer_store` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=601 DEFAULT CHARSET=utf8mb3 |
++----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > show tables;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select * from store;
++----------+------------------+------------+---------------------+
+| store_id | manager_staff_id | address_id | last_update         |
++----------+------------------+------------+---------------------+
+|        1 |                1 |          1 | 2006-02-15 04:57:12 |
+|        2 |                2 |          2 | 2006-02-15 04:57:12 |
++----------+------------------+------------+---------------------+
+2 rows in set (0.0151 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > desc customer;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra
+             |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| customer_id | smallint unsigned | NO   | PRI | NULL              | auto_increment
+             |
+| store_id    | tinyint unsigned  | NO   | MUL | NULL              |
+             |
+| first_name  | varchar(45)       | NO   |     | NULL              |
+             |
+| last_name   | varchar(45)       | NO   | MUL | NULL              |
+             |
+| email       | varchar(50)       | YES  |     | NULL              |
+             |
+| address_id  | smallint unsigned | NO   | MUL | NULL              |
+             |
+| active      | tinyint(1)        | NO   |     | 1                 |
+             |
+| create_date | datetime          | NO   |     | NULL              |
+             |
+| last_update | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+9 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select * from customer where first_name = 'Danna';
++-------------+----------+------------+-----------+-----------------+------------+--------+---------------------+---------------------+
+| customer_id | store_id | first_name | last_name | email           | address_id | active | create_date         | last_update         |
++-------------+----------+------------+-----------+-----------------+------------+--------+---------------------+---------------------+
+|         600 |        1 | Danna      | Lopez     | danna@gmail.com |          1 |      1 | 2024-10-02 19:20:32 | 2024-10-02 19:20:32 |
++-------------+----------+------------+-----------+-----------------+------------+--------+---------------------+---------------------+
+1 row in set (0.0042 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;
+ERROR: 1146 (42S02): Table 'sakila.playment' doesn't exist
+ MySQL  localhost:3306 ssl  sakila  SQL > select customer_id, first_name, last_name from customer where customer_id in (selecselect customer_id, first_name, last_name from customer where customer_id in (selecselect customer_id, first_name, last_name from customer where customer_id in (selecselect customer_id, first_name, last_name from customer where customer_id in (selecselect customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from playment) limit 50;                                    select * from customer where first_name = 'Danna';                                 select * from customer where first_name = 'Danna';
++-------------+----------+------------+-----------+-----------------+------------+--------+---------------------+---------------------+
+| customer_id | store_id | first_name | last_name | email           | address_id | active | create_date         | last_update         |
++-------------+----------+------------+-----------+-----------------+------------+--------+---------------------+---------------------+
+|         600 |        1 | Danna      | Lopez     | danna@gmail.com |          1 |      1 | 2024-10-02 19:20:32 | 2024-10-02 19:20:32 |
++-------------+----------+------------+-----------+-----------------+------------+--------+---------------------+---------------------+
+1 row in set (0.0013 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select customer_id, first_name, last_name from customer where customer_id in (select distinct(customer_id)from payment) limit 50;
++-------------+------------+-----------+
+| customer_id | first_name | last_name |
++-------------+------------+-----------+
+|           1 | MARY       | SMITH     |
+|           2 | PATRICIA   | JOHNSON   |
+|           3 | LINDA      | WILLIAMS  |
+|           4 | BARBARA    | JONES     |
+|           5 | ELIZABETH  | BROWN     |
+|           6 | JENNIFER   | DAVIS     |
+|           7 | MARIA      | MILLER    |
+|           8 | SUSAN      | WILSON    |
+|           9 | MARGARET   | MOORE     |
+|          10 | DOROTHY    | TAYLOR    |
+|          11 | LISA       | ANDERSON  |
+|          12 | NANCY      | THOMAS    |
+|          13 | KAREN      | JACKSON   |
+|          14 | BETTY      | WHITE     |
+|          15 | HELEN      | HARRIS    |
+|          16 | SANDRA     | MARTIN    |
+|          17 | DONNA      | THOMPSON  |
+|          18 | CAROL      | GARCIA    |
+|          19 | RUTH       | MARTINEZ  |
+|          20 | SHARON     | ROBINSON  |
+|          21 | MICHELLE   | CLARK     |
+|          22 | LAURA      | RODRIGUEZ |
+|          23 | SARAH      | LEWIS     |
+|          24 | KIMBERLY   | LEE       |
+|          25 | DEBORAH    | WALKER    |
+|          26 | JESSICA    | HALL      |
+|          27 | SHIRLEY    | ALLEN     |
+|          28 | CYNTHIA    | YOUNG     |
+|          29 | ANGELA     | HERNANDEZ |
+|          30 | MELISSA    | KING      |
+|          31 | BRENDA     | WRIGHT    |
+|          32 | AMY        | LOPEZ     |
+|          33 | ANNA       | HILL      |
+|          34 | REBECCA    | SCOTT     |
+|          35 | VIRGINIA   | GREEN     |
+|          36 | KATHLEEN   | ADAMS     |
+|          37 | PAMELA     | BAKER     |
+|          38 | MARTHA     | GONZALEZ  |
+|          39 | DEBRA      | NELSON    |
+|          40 | AMANDA     | CARTER    |
+|          41 | STEPHANIE  | MITCHELL  |
+|          42 | CAROLYN    | PEREZ     |
+|          43 | CHRISTINE  | ROBERTS   |
+|          44 | MARIE      | TURNER    |
+|          45 | JANET      | PHILLIPS  |
+|          46 | CATHERINE  | CAMPBELL  |
+|          47 | FRANCES    | PARKER    |
+|          48 | ANN        | EVANS     |
+|          49 | JOYCE      | EDWARDS   |
+|          50 | DIANE      | COLLINS   |
++-------------+------------+-----------+
+50 rows in set (0.0040 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select customer_id, first_name, last_name from customer where customer_id not in (select distinct(customer_id)from payment);
+
++-------------+------------+-----------+
+| customer_id | first_name | last_name |
++-------------+------------+-----------+
+|         600 | Danna      | Lopez     |
++-------------+------------+-----------+
+1 row in set (0.0050 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| employees          |
+| empresa            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| tbd_e1             |
+| tbd_e2             |
+| tbd_e3             |
+| world_x            |
++--------------------+
+11 rows in set (0.0015 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > use world_x;
+Default schema set to `world_x`.
+Fetching global names, object names from `world_x` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  world_x  SQL > desc country;
++---------+----------+------+-----+---------+-------+
+| Field   | Type     | Null | Key | Default | Extra |
++---------+----------+------+-----+---------+-------+
+| Code    | char(3)  | NO   | PRI |         |       |
+| Name    | char(52) | NO   |     |         |       |
+| Capital | int      | YES  |     | NULL    |       |
+| Code2   | char(2)  | NO   |     |         |       |
++---------+----------+------+-----+---------+-------+
+4 rows in set (0.0021 sec)
+ MySQL  localhost:3306 ssl  world_x  SQL > show tables;
++-------------------+
+| Tables_in_world_x |
++-------------------+
+| city              |
+| country           |
+| countryinfo       |
+| countrylanguage   |
++-------------------+
+4 rows in set (0.0017 sec)
+ MySQL  localhost:3306 ssl  world_x  SQL > desc countryinfo;
++-------+-------------+------+-----+---------+------------------+
+| Field | Type        | Null | Key | Default | Extra            |
++-------+-------------+------+-----+---------+------------------+
+| doc   | json        | YES  |     | NULL    |                  |
+| _id   | varchar(32) | NO   | PRI | NULL    | STORED GENERATED |
++-------+-------------+------+-----+---------+------------------+
+2 rows in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  world_x  SQL > select * from city where countrycode ="MEX";
++------+-----------------------------+-------------+----------------------+-------------------------+
+| ID   | Name                        | CountryCode | District             | Info                    |
++------+-----------------------------+-------------+----------------------+-------------------------+
+| 2515 | Ciudad de México            | MEX         | Distrito Federal     | {"Population": 8591309} |
+| 2516 | Guadalajara                 | MEX         | Jalisco              | {"Population": 1647720} |
+| 2517 | Ecatepec de Morelos         | MEX         | México               | {"Population": 1620303} |
+| 2518 | Puebla                      | MEX         | Puebla               | {"Population": 1346176} |
+| 2519 | Nezahualcóyotl              | MEX         | México               | {"Population": 1224924} |
+| 2520 | Juárez                      | MEX         | Chihuahua            | {"Population": 1217818} |
+| 2521 | Tijuana                     | MEX         | Baja California      | {"Population": 1212232} |
+| 2522 | León                        | MEX         | Guanajuato           | {"Population": 1133576} |
+| 2523 | Monterrey                   | MEX         | Nuevo León           | {"Population": 1108499} |
+| 2524 | Zapopan                     | MEX         | Jalisco              | {"Population": 1002239} |
+| 2525 | Naucalpan de Juárez         | MEX         | México               | {"Population": 857511}  |
+| 2526 | Mexicali                    | MEX         | Baja California      | {"Population": 764902}  |
+| 2527 | Culiacán                    | MEX         | Sinaloa              | {"Population": 744859}  |
+| 2528 | Acapulco de Juárez          | MEX         | Guerrero             | {"Population": 721011}  |
+| 2529 | Tlalnepantla de Baz         | MEX         | México               | {"Population": 720755}  |
+| 2530 | Mérida                      | MEX         | Yucatán              | {"Population": 703324}  |
+| 2531 | Chihuahua                   | MEX         | Chihuahua            | {"Population": 670208}  |
+| 2532 | San Luis Potosí             | MEX         | San Luis Potosí      | {"Population": 669353}  |
+| 2533 | Guadalupe                   | MEX         | Nuevo León           | {"Population": 668780}  |
+| 2534 | Toluca                      | MEX         | México               | {"Population": 665617}  |
+| 2535 | Aguascalientes              | MEX         | Aguascalientes       | {"Population": 643360}  |
+| 2536 | Querétaro                   | MEX         | Querétaro de Arteaga | {"Population": 639839}  |
+| 2537 | Morelia                     | MEX         | Michoacán de Ocampo  | {"Population": 619958}  |
+| 2538 | Hermosillo                  | MEX         | Sonora               | {"Population": 608697}  |
+| 2539 | Saltillo                    | MEX         | Coahuila de Zaragoza | {"Population": 577352}  |
+| 2540 | Torreón                     | MEX         | Coahuila de Zaragoza | {"Population": 529093}  |
+| 2541 | Centro (Villahermosa)       | MEX         | Tabasco              | {"Population": 519873}  |
+| 2542 | San Nicolás de los Garza    | MEX         | Nuevo León           | {"Population": 495540}  |
+| 2543 | Durango                     | MEX         | Durango              | {"Population": 490524}  |
+| 2544 | Chimalhuacán                | MEX         | México               | {"Population": 490245}  |
+| 2545 | Tlaquepaque                 | MEX         | Jalisco              | {"Population": 475472}  |
+| 2546 | Atizapán de Zaragoza        | MEX         | México               | {"Population": 467262}  |
+| 2547 | Veracruz                    | MEX         | Veracruz             | {"Population": 457119}  |
+| 2548 | Cuautitlán Izcalli          | MEX         | México               | {"Population": 452976}  |
+| 2549 | Irapuato                    | MEX         | Guanajuato           | {"Population": 440039}  |
+| 2550 | Tuxtla Gutiérrez            | MEX         | Chiapas              | {"Population": 433544}  |
+| 2551 | Tultitlán                   | MEX         | México               | {"Population": 432411}  |
+| 2552 | Reynosa                     | MEX         | Tamaulipas           | {"Population": 419776}  |
+| 2553 | Benito Juárez               | MEX         | Quintana Roo         | {"Population": 419276}  |
+| 2554 | Matamoros                   | MEX         | Tamaulipas           | {"Population": 416428}  |
+| 2555 | Xalapa                      | MEX         | Veracruz             | {"Population": 390058}  |
+| 2556 | Celaya                      | MEX         | Guanajuato           | {"Population": 382140}  |
+| 2557 | Mazatlán                    | MEX         | Sinaloa              | {"Population": 380265}  |
+| 2558 | Ensenada                    | MEX         | Baja California      | {"Population": 369573}  |
+| 2559 | Ahome                       | MEX         | Sinaloa              | {"Population": 358663}  |
+| 2560 | Cajeme                      | MEX         | Sonora               | {"Population": 355679}  |
+| 2561 | Cuernavaca                  | MEX         | Morelos              | {"Population": 337966}  |
+| 2562 | Tonalá                      | MEX         | Jalisco              | {"Population": 336109}  |
+| 2563 | Valle de Chalco Solidaridad | MEX         | México               | {"Population": 323113}  |
+| 2564 | Nuevo Laredo                | MEX         | Tamaulipas           | {"Population": 310277}  |
+| 2565 | Tepic                       | MEX         | Nayarit              | {"Population": 305025}  |
+| 2566 | Tampico                     | MEX         | Tamaulipas           | {"Population": 294789}  |
+| 2567 | Ixtapaluca                  | MEX         | México               | {"Population": 293160}  |
+| 2568 | Apodaca                     | MEX         | Nuevo León           | {"Population": 282941}  |
+| 2569 | Guasave                     | MEX         | Sinaloa              | {"Population": 277201}  |
+| 2570 | Gómez Palacio               | MEX         | Durango              | {"Population": 272806}  |
+| 2571 | Tapachula                   | MEX         | Chiapas              | {"Population": 271141}  |
+| 2572 | Nicolás Romero              | MEX         | México               | {"Population": 269393}  |
+| 2573 | Coatzacoalcos               | MEX         | Veracruz             | {"Population": 267037}  |
+| 2574 | Uruapan                     | MEX         | Michoacán de Ocampo  | {"Population": 265211}  |
+| 2575 | Victoria                    | MEX         | Tamaulipas           | {"Population": 262686}  |
+| 2576 | Oaxaca de Juárez            | MEX         | Oaxaca               | {"Population": 256848}  |
+| 2577 | Coacalco de Berriozábal     | MEX         | México               | {"Population": 252270}  |
+| 2578 | Pachuca de Soto             | MEX         | Hidalgo              | {"Population": 244688}  |
+| 2579 | General Escobedo            | MEX         | Nuevo León           | {"Population": 232961}  |
+| 2580 | Salamanca                   | MEX         | Guanajuato           | {"Population": 226864}  |
+| 2581 | Santa Catarina              | MEX         | Nuevo León           | {"Population": 226573}  |
+| 2582 | Tehuacán                    | MEX         | Puebla               | {"Population": 225943}  |
+| 2583 | Chalco                      | MEX         | México               | {"Population": 222201}  |
+| 2584 | Cárdenas                    | MEX         | Tabasco              | {"Population": 216903}  |
+| 2585 | Campeche                    | MEX         | Campeche             | {"Population": 216735}  |
+| 2586 | La Paz                      | MEX         | México               | {"Population": 213045}  |
+| 2587 | Othón P. Blanco (Chetumal)  | MEX         | Quintana Roo         | {"Population": 208014}  |
+| 2588 | Texcoco                     | MEX         | México               | {"Population": 203681}  |
+| 2589 | La Paz                      | MEX         | Baja California Sur  | {"Population": 196708}  |
+| 2590 | Metepec                     | MEX         | México               | {"Population": 194265}  |
+| 2591 | Monclova                    | MEX         | Coahuila de Zaragoza | {"Population": 193657}  |
+| 2592 | Huixquilucan                | MEX         | México               | {"Population": 193156}  |
+| 2593 | Chilpancingo de los Bravo   | MEX         | Guerrero             | {"Population": 192509}  |
+| 2594 | Puerto Vallarta             | MEX         | Jalisco              | {"Population": 183741}  |
+| 2595 | Fresnillo                   | MEX         | Zacatecas            | {"Population": 182744}  |
+| 2596 | Ciudad Madero               | MEX         | Tamaulipas           | {"Population": 182012}  |
+| 2597 | Soledad de Graciano Sánchez | MEX         | San Luis Potosí      | {"Population": 179956}  |
+| 2598 | San Juan del Río            | MEX         | Querétaro            | {"Population": 179300}  |
+| 2599 | San Felipe del Progreso     | MEX         | México               | {"Population": 177330}  |
+| 2600 | Córdoba                     | MEX         | Veracruz             | {"Population": 176952}  |
+| 2601 | Tecámac                     | MEX         | México               | {"Population": 172410}  |
+| 2602 | Ocosingo                    | MEX         | Chiapas              | {"Population": 171495}  |
+| 2603 | Carmen                      | MEX         | Campeche             | {"Population": 171367}  |
+| 2604 | Lázaro Cárdenas             | MEX         | Michoacán de Ocampo  | {"Population": 170878}  |
+| 2605 | Jiutepec                    | MEX         | Morelos              | {"Population": 170428}  |
+| 2606 | Papantla                    | MEX         | Veracruz             | {"Population": 170123}  |
+| 2607 | Comalcalco                  | MEX         | Tabasco              | {"Population": 164640}  |
+| 2608 | Zamora                      | MEX         | Michoacán de Ocampo  | {"Population": 161191}  |
+| 2609 | Nogales                     | MEX         | Sonora               | {"Population": 159103}  |
+| 2610 | Huimanguillo                | MEX         | Tabasco              | {"Population": 158335}  |
+| 2611 | Cuautla                     | MEX         | Morelos              | {"Population": 153132}  |
+| 2612 | Minatitlán                  | MEX         | Veracruz             | {"Population": 152983}  |
+| 2613 | Poza Rica de Hidalgo        | MEX         | Veracruz             | {"Population": 152678}  |
+| 2614 | Ciudad Valles               | MEX         | San Luis Potosí      | {"Population": 146411}  |
+| 2615 | Navolato                    | MEX         | Sinaloa              | {"Population": 145396}  |
+| 2616 | San Luis Río Colorado       | MEX         | Sonora               | {"Population": 145276}  |
+| 2617 | Pénjamo                     | MEX         | Guanajuato           | {"Population": 143927}  |
+| 2618 | San Andrés Tuxtla           | MEX         | Veracruz             | {"Population": 142251}  |
+| 2619 | Guanajuato                  | MEX         | Guanajuato           | {"Population": 141215}  |
+| 2620 | Navojoa                     | MEX         | Sonora               | {"Population": 140495}  |
+| 2621 | Zitácuaro                   | MEX         | Michoacán de Ocampo  | {"Population": 137970}  |
+| 2622 | Boca del Río                | MEX         | Veracruz-Llave       | {"Population": 135721}  |
+| 2623 | Allende                     | MEX         | Guanajuato           | {"Population": 134645}  |
+| 2624 | Silao                       | MEX         | Guanajuato           | {"Population": 134037}  |
+| 2625 | Macuspana                   | MEX         | Tabasco              | {"Population": 133795}  |
+| 2626 | San Juan Bautista Tuxtepec  | MEX         | Oaxaca               | {"Population": 133675}  |
+| 2627 | San Cristóbal de las Casas  | MEX         | Chiapas              | {"Population": 132317}  |
+| 2628 | Valle de Santiago           | MEX         | Guanajuato           | {"Population": 130557}  |
+| 2629 | Guaymas                     | MEX         | Sonora               | {"Population": 130108}  |
+| 2630 | Colima                      | MEX         | Colima               | {"Population": 129454}  |
+| 2631 | Dolores Hidalgo             | MEX         | Guanajuato           | {"Population": 128675}  |
+| 2632 | Lagos de Moreno             | MEX         | Jalisco              | {"Population": 127949}  |
+| 2633 | Piedras Negras              | MEX         | Coahuila de Zaragoza | {"Population": 127898}  |
+| 2634 | Altamira                    | MEX         | Tamaulipas           | {"Population": 127490}  |
+| 2635 | Túxpam                      | MEX         | Veracruz             | {"Population": 126475}  |
+| 2636 | San Pedro Garza García      | MEX         | Nuevo León           | {"Population": 126147}  |
+| 2637 | Cuauhtémoc                  | MEX         | Chihuahua            | {"Population": 124279}  |
+| 2638 | Manzanillo                  | MEX         | Colima               | {"Population": 124014}  |
+| 2639 | Iguala de la Independencia  | MEX         | Guerrero             | {"Population": 123883}  |
+| 2640 | Zacatecas                   | MEX         | Zacatecas            | {"Population": 123700}  |
+| 2641 | Tlajomulco de Zúñiga        | MEX         | Jalisco              | {"Population": 123220}  |
+| 2642 | Tulancingo de Bravo         | MEX         | Hidalgo              | {"Population": 121946}  |
+| 2643 | Zinacantepec                | MEX         | México               | {"Population": 121715}  |
+| 2644 | San Martín Texmelucan       | MEX         | Puebla               | {"Population": 121093}  |
+| 2645 | Tepatitlán de Morelos       | MEX         | Jalisco              | {"Population": 118948}  |
+| 2646 | Martínez de la Torre        | MEX         | Veracruz             | {"Population": 118815}  |
+| 2647 | Orizaba                     | MEX         | Veracruz             | {"Population": 118488}  |
+| 2648 | Apatzingán                  | MEX         | Michoacán de Ocampo  | {"Population": 117849}  |
+| 2649 | Atlixco                     | MEX         | Puebla               | {"Population": 117019}  |
+| 2650 | Delicias                    | MEX         | Chihuahua            | {"Population": 116132}  |
+| 2651 | Ixtlahuaca                  | MEX         | México               | {"Population": 115548}  |
+| 2652 | El Mante                    | MEX         | Tamaulipas           | {"Population": 112453}  |
+| 2653 | Lerdo                       | MEX         | Durango              | {"Population": 112272}  |
+| 2654 | Almoloya de Juárez          | MEX         | México               | {"Population": 110550}  |
+| 2655 | Acámbaro                    | MEX         | Guanajuato           | {"Population": 110487}  |
+| 2656 | Acuña                       | MEX         | Coahuila de Zaragoza | {"Population": 110388}  |
+| 2657 | Guadalupe                   | MEX         | Zacatecas            | {"Population": 108881}  |
+| 2658 | Huejutla de Reyes           | MEX         | Hidalgo              | {"Population": 108017}  |
+| 2659 | Hidalgo                     | MEX         | Michoacán de Ocampo  | {"Population": 106198}  |
+| 2660 | Los Cabos                   | MEX         | Baja California Sur  | {"Population": 105199}  |
+| 2661 | Comitán de Domínguez        | MEX         | Chiapas              | {"Population": 104986}  |
+| 2662 | Cunduacán                   | MEX         | Tabasco              | {"Population": 104164}  |
+| 2663 | Río Bravo                   | MEX         | Tamaulipas           | {"Population": 103901}  |
+| 2664 | Temapache                   | MEX         | Veracruz             | {"Population": 102824}  |
+| 2665 | Chilapa de Alvarez          | MEX         | Guerrero             | {"Population": 102716}  |
+| 2666 | Hidalgo del Parral          | MEX         | Chihuahua            | {"Population": 100881}  |
+| 2667 | San Francisco del Rincón    | MEX         | Guanajuato           | {"Population": 100149}  |
+| 2668 | Taxco de Alarcón            | MEX         | Guerrero             | {"Population": 99907}   |
+| 2669 | Zumpango                    | MEX         | México               | {"Population": 99781}   |
+| 2670 | San Pedro Cholula           | MEX         | Puebla               | {"Population": 99734}   |
+| 2671 | Lerma                       | MEX         | México               | {"Population": 99714}   |
+| 2672 | Tecomán                     | MEX         | Colima               | {"Population": 99296}   |
+| 2673 | Las Margaritas              | MEX         | Chiapas              | {"Population": 97389}   |
+| 2674 | Cosoleacaque                | MEX         | Veracruz             | {"Population": 97199}   |
+| 2675 | San Luis de la Paz          | MEX         | Guanajuato           | {"Population": 96763}   |
+| 2676 | José Azueta                 | MEX         | Guerrero             | {"Population": 95448}   |
+| 2677 | Santiago Ixcuintla          | MEX         | Nayarit              | {"Population": 95311}   |
+| 2678 | San Felipe                  | MEX         | Guanajuato           | {"Population": 95305}   |
+| 2679 | Tejupilco                   | MEX         | México               | {"Population": 94934}   |
+| 2680 | Tantoyuca                   | MEX         | Veracruz             | {"Population": 94709}   |
+| 2681 | Salvatierra                 | MEX         | Guanajuato           | {"Population": 94322}   |
+| 2682 | Tultepec                    | MEX         | México               | {"Population": 93364}   |
+| 2683 | Temixco                     | MEX         | Morelos              | {"Population": 92686}   |
+| 2684 | Matamoros                   | MEX         | Coahuila de Zaragoza | {"Population": 91858}   |
+| 2685 | Pánuco                      | MEX         | Veracruz             | {"Population": 90551}   |
+| 2686 | El Fuerte                   | MEX         | Sinaloa              | {"Population": 89556}   |
+| 2687 | Tierra Blanca               | MEX         | Veracruz             | {"Population": 89143}   |
++------+-----------------------------+-------------+----------------------+-------------------------+
+173 rows in set (0.0131 sec)
+
+MySQL  localhost:3306 ssl  world_x  SQL > select sum(population) as total, countrycode from city group by countrycode order by countrycode;
++-----------+-------------+
+| total     | countrycode |
++-----------+-------------+
+|     29034 | ABW         |
+|   2332100 | AFG         |
+|   2561600 | AGO         |
+|      1556 | AIA         |
+|    270000 | ALB         |
+|     21189 | AND         |
+|      2345 | ANT         |
+|   1728336 | ARE         |
+|  19996563 | ARG         |
+|   1633100 | ARM         |
+|      7523 | ASM         |
+|     24000 | ATG         |
+|  11313666 | AUS         |
+|   2384273 | AUT         |
+|   2464000 | AZE         |
+|    300000 | BDI         |
+|   1609322 | BEL         |
+|    968503 | BEN         |
+|   1229000 | BFA         |
+|   8569906 | BGD         |
+|   2696915 | BGR         |
+|    148000 | BHR         |
+|    172000 | BHS         |
+|    599106 | BIH         |
+|   4741000 | BLR         |
+|     62915 | BLZ         |
+|      3000 | BMU         |
+|   3378644 | BOL         |
+|  85876862 | BRA         |
+|      6070 | BRB         |
+|     21484 | BRN         |
+|     22000 | BTN         |
+|    314822 | BWA         |
+|    524000 | CAF         |
+|  12673840 | CAN         |
+|       670 | CCK         |
+|    914200 | CHE         |
+|   9717970 | CHL         |
+| 175953614 | CHN         |
+|   3191137 | CIV         |
+|   3522554 | CMR         |
+|   9864615 | COD         |
+|   1450000 | COG         |
+|     11900 | COK         |
+|  20250990 | COL         |
+|     36000 | COM         |
+|     94800 | CPV         |
+|    339131 | CRI         |
+|   4629925 | CUB         |
+|       700 | CXR         |
+|     19600 | CYM         |
+|    349400 | CYP         |
+|   2634711 | CZE         |
+|  26245483 | DEU         |
+|    383000 | DJI         |
+|     16243 | DMA         |
+|   1215945 | DNK         |
+|   2438276 | DOM         |
+|   5192179 | DZA         |
+|   5744142 | ECU         |
+|  20083079 | EGY         |
+|    431000 | ERI         |
+|    169000 | ESH         |
+|  16669189 | ESP         |
+|    505227 | EST         |
+|   3190334 | ETH         |
+|   1532919 | FIN         |
+|     77366 | FJI         |
+|      1636 | FLK         |
+|   9244494 | FRA         |
+|     14542 | FRO         |
+|     30600 | FSM         |
+|    419000 | GAB         |
+|  22436673 | GBR         |
+|   1880900 | GEO         |
+|   1819889 | GHA         |
+|     27025 | GIB         |
+|   1090610 | GIN         |
+|     75380 | GLP         |
+|    144926 | GMB         |
+|    241000 | GNB         |
+|     40000 | GNQ         |
+|   1972843 | GRC         |
+|      4621 | GRD         |
+|     13445 | GRL         |
+|   1225188 | GTM         |
+|     50699 | GUF         |
+|     10639 | GUM         |
+|    254000 | GUY         |
+|   3300633 | HKG         |
+|   1287000 | HND         |
+|   1168883 | HRV         |
+|   1517338 | HTI         |
+|   2953310 | HUN         |
+|  37485695 | IDN         |
+| 123298526 | IND         |
+|    609041 | IRL         |
+|  26032990 | IRN         |
+|   8926041 | IRQ         |
+|    109184 | ISL         |
+|   2813000 | ISR         |
+|  15087019 | ITA         |
+|    314140 | JAM         |
+|   1847677 | JOR         |
+|  77965107 | JPN         |
+|   5484200 | KAZ         |
+|   3522793 | KEN         |
+|    812100 | KGZ         |
+|    805055 | KHM         |
+|      7281 | KIR         |
+|     11600 | KNA         |
+|  38999893 | KOR         |
+|    261252 | KWT         |
+|    628452 | LAO         |
+|   1340000 | LBN         |
+|    850000 | LBR         |
+|   2697007 | LBY         |
+|      2301 | LCA         |
+|     10389 | LIE         |
+|   1545000 | LKA         |
+|    297000 | LSO         |
+|   1473317 | LTU         |
+|     80700 | LUX         |
+|    968596 | LVA         |
+|    437500 | MAC         |
+|   8757562 | MAR         |
+|     14388 | MCO         |
+|   1193300 | MDA         |
+|   1123161 | MDG         |
+|     71000 | MDV         |
+|  59752521 | MEX         |
+|     28000 | MHL         |
+|    444299 | MKD         |
+|    809552 | MLI         |
+|     28518 | MLT         |
+|   6203000 | MMR         |
+|    773700 | MNG         |
+|      9200 | MNP         |
+|   3143145 | MOZ         |
+|    764900 | MRT         |
+|      2000 | MSR         |
+|     94050 | MTQ         |
+|    337280 | MUS         |
+|    914119 | MWI         |
+|   4605141 | MYS         |
+|     12000 | MYT         |
+|    169000 | NAM         |
+|     76293 | NCL         |
+|    653857 | NER         |
+|       800 | NFK         |
+|  17366900 | NGA         |
+|   1269223 | NIC         |
+|       682 | NIU         |
+|   5180049 | NLD         |
+|   1100028 | NOR         |
+|   1132403 | NPL         |
+|      4609 | NRU         |
+|   1847600 | NZL         |
+|    537096 | OMN         |
+|  31546745 | PAK         |
+|    786755 | PAN         |
+|        42 | PCN         |
+|  12147242 | PER         |
+|  30934791 | PHL         |
+|     12000 | PLW         |
+|    247000 | PNG         |
+|  11687431 | POL         |
+|   1564174 | PRI         |
+|   6476751 | PRK         |
+|   1145011 | PRT         |
+|   1020020 | PRY         |
+|    902360 | PSE         |
+|     51441 | PYF         |
+|    355000 | QAT         |
+|    131480 | REU         |
+|   7469006 | ROM         |
+|  69150700 | RUS         |
+|    286000 | RWA         |
+|  10636700 | SAU         |
+|   4752187 | SDN         |
+|   2770458 | SEN         |
+|   4017733 | SGP         |
+|      1500 | SHN         |
+|      1438 | SJM         |
+|     50100 | SLB         |
+|    850000 | SLE         |
+|   1138231 | SLV         |
+|      7096 | SMR         |
+|   1177000 | SOM         |
+|      5808 | SPM         |
+|     49541 | STP         |
+|    112000 | SUR         |
+|    784143 | SVK         |
+|    386518 | SVN         |
+|   2891431 | SWE         |
+|     61000 | SWZ         |
+|     41000 | SYC         |
+|   4477784 | SYR         |
+|      4800 | TCA         |
+|    630465 | TCD         |
+|    375000 | TGO         |
+|   7953161 | THA         |
+|    685500 | TJK         |
+|       300 | TKL         |
+|    972600 | TKM         |
+|     47900 | TMP         |
+|     22400 | TON         |
+|     99997 | TTO         |
+|   1798500 | TUN         |
+|  28327028 | TUR         |
+|      4600 | TUV         |
+|  13569336 | TWN         |
+|   2944034 | TZA         |
+|    890800 | UGA         |
+|  20074000 | UKR         |
+|   1236000 | URY         |
+|  78625774 | USA         |
+|   5183900 | UZB         |
+|       455 | VAT         |
+|     17100 | VCT         |
+|  12251091 | VEN         |
+|      8000 | VGB         |
+|     13000 | VIR         |
+|   9364813 | VNM         |
+|     33700 | VUT         |
+|      1137 | WLF         |
+|     35900 | WSM         |
+|   1743700 | YEM         |
+|   2189507 | YUG         |
+|  15196370 | ZAF         |
+|   2473500 | ZMB         |
+|   2730420 | ZWE         |
++-----------+-------------+
+232 rows in set (0.0100 sec)
+ MySQL  localhost:3306 ssl  world_x  SQL > select name from country where code = "PCN";
++----------+
+| name     |
++----------+
+| Pitcairn |
++----------+
+1 row in set (0.0055 sec)
+ MySQL  localhost:3306 ssl  world_x  SQL > select count(*) as total, countrycode from city group by countrycode order by countrycode;
++-------+-------------+
+| total | countrycode |
++-------+-------------+
+|     1 | ABW         |
+|     4 | AFG         |
+|     5 | AGO         |
+|     2 | AIA         |
+|     1 | ALB         |
+|     1 | AND         |
+|     1 | ANT         |
+|     5 | ARE         |
+|    57 | ARG         |
+|     3 | ARM         |
+|     2 | ASM         |
+|     1 | ATG         |
+|    14 | AUS         |
+|     6 | AUT         |
+|     4 | AZE         |
+|     1 | BDI         |
+|     9 | BEL         |
+|     4 | BEN         |
+|     3 | BFA         |
+|    24 | BGD         |
+|    10 | BGR         |
+|     1 | BHR         |
+|     1 | BHS         |
+|     3 | BIH         |
+|    16 | BLR         |
+|     2 | BLZ         |
+|     2 | BMU         |
+|     8 | BOL         |
+|   250 | BRA         |
+|     1 | BRB         |
+|     1 | BRN         |
+|     1 | BTN         |
+|     2 | BWA         |
+|     1 | CAF         |
+|    49 | CAN         |
+|     2 | CCK         |
+|     5 | CHE         |
+|    29 | CHL         |
+|   363 | CHN         |
+|     5 | CIV         |
+|     7 | CMR         |
+|    18 | COD         |
+|     2 | COG         |
+|     1 | COK         |
+|    38 | COL         |
+|     1 | COM         |
+|     1 | CPV         |
+|     1 | CRI         |
+|    14 | CUB         |
+|     1 | CXR         |
+|     1 | CYM         |
+|     2 | CYP         |
+|    10 | CZE         |
+|    93 | DEU         |
+|     1 | DJI         |
+|     1 | DMA         |
+|     5 | DNK         |
+|     6 | DOM         |
+|    18 | DZA         |
+|    15 | ECU         |
+|    37 | EGY         |
+|     1 | ERI         |
+|     1 | ESH         |
+|    59 | ESP         |
+|     2 | EST         |
+|     7 | ETH         |
+|     7 | FIN         |
+|     1 | FJI         |
+|     1 | FLK         |
+|    40 | FRA         |
+|     1 | FRO         |
+|     2 | FSM         |
+|     1 | GAB         |
+|    81 | GBR         |
+|     5 | GEO         |
+|     5 | GHA         |
+|     1 | GIB         |
+|     1 | GIN         |
+|     2 | GLP         |
+|     2 | GMB         |
+|     1 | GNB         |
+|     1 | GNQ         |
+|     8 | GRC         |
+|     1 | GRD         |
+|     1 | GRL         |
+|     4 | GTM         |
+|     1 | GUF         |
+|     2 | GUM         |
+|     1 | GUY         |
+|     2 | HKG         |
+|     3 | HND         |
+|     4 | HRV         |
+|     4 | HTI         |
+|     9 | HUN         |
+|    85 | IDN         |
+|   341 | IND         |
+|     2 | IRL         |
+|    67 | IRN         |
+|    15 | IRQ         |
+|     1 | ISL         |
+|    14 | ISR         |
+|    58 | ITA         |
+|     3 | JAM         |
+|     5 | JOR         |
+|   248 | JPN         |
+|    21 | KAZ         |
+|     8 | KEN         |
+|     2 | KGZ         |
+|     3 | KHM         |
+|     2 | KIR         |
+|     1 | KNA         |
+|    70 | KOR         |
+|     3 | KWT         |
+|     2 | LAO         |
+|     2 | LBN         |
+|     1 | LBR         |
+|     4 | LBY         |
+|     1 | LCA         |
+|     2 | LIE         |
+|     7 | LKA         |
+|     1 | LSO         |
+|     5 | LTU         |
+|     1 | LUX         |
+|     3 | LVA         |
+|     1 | MAC         |
+|    22 | MAR         |
+|     2 | MCO         |
+|     4 | MDA         |
+|     5 | MDG         |
+|     1 | MDV         |
+|   173 | MEX         |
+|     1 | MHL         |
+|     1 | MKD         |
+|     1 | MLI         |
+|     2 | MLT         |
+|    16 | MMR         |
+|     1 | MNG         |
+|     1 | MNP         |
+|    12 | MOZ         |
+|     2 | MRT         |
+|     1 | MSR         |
+|     1 | MTQ         |
+|     3 | MUS         |
+|     2 | MWI         |
+|    18 | MYS         |
+|     1 | MYT         |
+|     1 | NAM         |
+|     1 | NCL         |
+|     3 | NER         |
+|     1 | NFK         |
+|    64 | NGA         |
+|     4 | NIC         |
+|     1 | NIU         |
+|    28 | NLD         |
+|     5 | NOR         |
+|     5 | NPL         |
+|     2 | NRU         |
+|     9 | NZL         |
+|     5 | OMN         |
+|    59 | PAK         |
+|     2 | PAN         |
+|     1 | PCN         |
+|    22 | PER         |
+|   136 | PHL         |
+|     1 | PLW         |
+|     1 | PNG         |
+|    44 | POL         |
+|     9 | PRI         |
+|    13 | PRK         |
+|     5 | PRT         |
+|     5 | PRY         |
+|     6 | PSE         |
+|     2 | PYF         |
+|     1 | QAT         |
+|     1 | REU         |
+|    29 | ROM         |
+|   189 | RUS         |
+|     1 | RWA         |
+|    24 | SAU         |
+|    12 | SDN         |
+|     9 | SEN         |
+|     1 | SGP         |
+|     1 | SHN         |
+|     1 | SJM         |
+|     1 | SLB         |
+|     1 | SLE         |
+|     7 | SLV         |
+|     2 | SMR         |
+|     3 | SOM         |
+|     1 | SPM         |
+|     1 | STP         |
+|     1 | SUR         |
+|     3 | SVK         |
+|     2 | SVN         |
+|    15 | SWE         |
+|     1 | SWZ         |
+|     1 | SYC         |
+|    11 | SYR         |
+|     1 | TCA         |
+|     2 | TCD         |
+|     1 | TGO         |
+|    12 | THA         |
+|     2 | TJK         |
+|     1 | TKL         |
+|     4 | TKM         |
+|     1 | TMP         |
+|     1 | TON         |
+|     2 | TTO         |
+|     8 | TUN         |
+|    62 | TUR         |
+|     1 | TUV         |
+|    42 | TWN         |
+|    10 | TZA         |
+|     1 | UGA         |
+|    57 | UKR         |
+|     1 | URY         |
+|   274 | USA         |
+|    17 | UZB         |
+|     1 | VAT         |
+|     1 | VCT         |
+|    41 | VEN         |
+|     1 | VGB         |
+|     1 | VIR         |
+|    22 | VNM         |
+|     1 | VUT         |
+|     1 | WLF         |
+|     1 | WSM         |
+|     6 | YEM         |
+|     8 | YUG         |
+|    44 | ZAF         |
+|     7 | ZMB         |
+|     6 | ZWE         |
++-------+-------------+
+232 rows in set (0.0126 sec)
+ MySQL  localhost:3306 ssl  world_x  SQL > select count(*) as total, countrycode from city group by countrycode order by total;
++-------+-------------+
+| total | countrycode |
++-------+-------------+
+|     1 | ABW         |
+|     1 | ALB         |
+|     1 | AND         |
+|     1 | ANT         |
+|     1 | ATG         |
+|     1 | BDI         |
+|     1 | BHR         |
+|     1 | BHS         |
+|     1 | BRB         |
+|     1 | BRN         |
+|     1 | BTN         |
+|     1 | CAF         |
+|     1 | COK         |
+|     1 | COM         |
+|     1 | CPV         |
+|     1 | CRI         |
+|     1 | CXR         |
+|     1 | CYM         |
+|     1 | DJI         |
+|     1 | DMA         |
+|     1 | ERI         |
+|     1 | ESH         |
+|     1 | FJI         |
+|     1 | FLK         |
+|     1 | FRO         |
+|     1 | GAB         |
+|     1 | GIB         |
+|     1 | GIN         |
+|     1 | GNB         |
+|     1 | GNQ         |
+|     1 | GRD         |
+|     1 | GRL         |
+|     1 | GUF         |
+|     1 | GUY         |
+|     1 | ISL         |
+|     1 | KNA         |
+|     1 | LBR         |
+|     1 | LCA         |
+|     1 | LSO         |
+|     1 | LUX         |
+|     1 | MAC         |
+|     1 | MDV         |
+|     1 | MHL         |
+|     1 | MKD         |
+|     1 | MLI         |
+|     1 | MNG         |
+|     1 | MNP         |
+|     1 | MSR         |
+|     1 | MTQ         |
+|     1 | MYT         |
+|     1 | NAM         |
+|     1 | NCL         |
+|     1 | NFK         |
+|     1 | NIU         |
+|     1 | PCN         |
+|     1 | PLW         |
+|     1 | PNG         |
+|     1 | QAT         |
+|     1 | REU         |
+|     1 | RWA         |
+|     1 | SGP         |
+|     1 | SHN         |
+|     1 | SJM         |
+|     1 | SLB         |
+|     1 | SLE         |
+|     1 | SPM         |
+|     1 | STP         |
+|     1 | SUR         |
+|     1 | SWZ         |
+|     1 | SYC         |
+|     1 | TCA         |
+|     1 | TGO         |
+|     1 | TKL         |
+|     1 | TMP         |
+|     1 | TON         |
+|     1 | TUV         |
+|     1 | UGA         |
+|     1 | URY         |
+|     1 | VAT         |
+|     1 | VCT         |
+|     1 | VGB         |
+|     1 | VIR         |
+|     1 | VUT         |
+|     1 | WLF         |
+|     1 | WSM         |
+|     2 | AIA         |
+|     2 | ASM         |
+|     2 | BLZ         |
+|     2 | BMU         |
+|     2 | BWA         |
+|     2 | CCK         |
+|     2 | COG         |
+|     2 | CYP         |
+|     2 | EST         |
+|     2 | FSM         |
+|     2 | GLP         |
+|     2 | GMB         |
+|     2 | GUM         |
+|     2 | HKG         |
+|     2 | IRL         |
+|     2 | KGZ         |
+|     2 | KIR         |
+|     2 | LAO         |
+|     2 | LBN         |
+|     2 | LIE         |
+|     2 | MCO         |
+|     2 | MLT         |
+|     2 | MRT         |
+|     2 | MWI         |
+|     2 | NRU         |
+|     2 | PAN         |
+|     2 | PYF         |
+|     2 | SMR         |
+|     2 | SVN         |
+|     2 | TCD         |
+|     2 | TJK         |
+|     2 | TTO         |
+|     3 | ARM         |
+|     3 | BFA         |
+|     3 | BIH         |
+|     3 | HND         |
+|     3 | JAM         |
+|     3 | KHM         |
+|     3 | KWT         |
+|     3 | LVA         |
+|     3 | MUS         |
+|     3 | NER         |
+|     3 | SOM         |
+|     3 | SVK         |
+|     4 | AFG         |
+|     4 | AZE         |
+|     4 | BEN         |
+|     4 | GTM         |
+|     4 | HRV         |
+|     4 | HTI         |
+|     4 | LBY         |
+|     4 | MDA         |
+|     4 | NIC         |
+|     4 | TKM         |
+|     5 | AGO         |
+|     5 | ARE         |
+|     5 | CHE         |
+|     5 | CIV         |
+|     5 | DNK         |
+|     5 | GEO         |
+|     5 | GHA         |
+|     5 | JOR         |
+|     5 | LTU         |
+|     5 | MDG         |
+|     5 | NOR         |
+|     5 | NPL         |
+|     5 | OMN         |
+|     5 | PRT         |
+|     5 | PRY         |
+|     6 | AUT         |
+|     6 | DOM         |
+|     6 | PSE         |
+|     6 | YEM         |
+|     6 | ZWE         |
+|     7 | CMR         |
+|     7 | ETH         |
+|     7 | FIN         |
+|     7 | LKA         |
+|     7 | SLV         |
+|     7 | ZMB         |
+|     8 | BOL         |
+|     8 | GRC         |
+|     8 | KEN         |
+|     8 | TUN         |
+|     8 | YUG         |
+|     9 | BEL         |
+|     9 | HUN         |
+|     9 | NZL         |
+|     9 | PRI         |
+|     9 | SEN         |
+|    10 | BGR         |
+|    10 | CZE         |
+|    10 | TZA         |
+|    11 | SYR         |
+|    12 | MOZ         |
+|    12 | SDN         |
+|    12 | THA         |
+|    13 | PRK         |
+|    14 | AUS         |
+|    14 | CUB         |
+|    14 | ISR         |
+|    15 | ECU         |
+|    15 | IRQ         |
+|    15 | SWE         |
+|    16 | BLR         |
+|    16 | MMR         |
+|    17 | UZB         |
+|    18 | COD         |
+|    18 | DZA         |
+|    18 | MYS         |
+|    21 | KAZ         |
+|    22 | MAR         |
+|    22 | PER         |
+|    22 | VNM         |
+|    24 | BGD         |
+|    24 | SAU         |
+|    28 | NLD         |
+|    29 | CHL         |
+|    29 | ROM         |
+|    37 | EGY         |
+|    38 | COL         |
+|    40 | FRA         |
+|    41 | VEN         |
+|    42 | TWN         |
+|    44 | POL         |
+|    44 | ZAF         |
+|    49 | CAN         |
+|    57 | ARG         |
+|    57 | UKR         |
+|    58 | ITA         |
+|    59 | ESP         |
+|    59 | PAK         |
+|    62 | TUR         |
+|    64 | NGA         |
+|    67 | IRN         |
+|    70 | KOR         |
+|    81 | GBR         |
+|    85 | IDN         |
+|    93 | DEU         |
+|   136 | PHL         |
+|   173 | MEX         |
+|   189 | RUS         |
+|   248 | JPN         |
+|   250 | BRA         |
+|   274 | USA         |
+|   341 | IND         |
+|   363 | CHN         |
++-------+-------------+
+232 rows in set (0.0125 sec)
+ MySQL  localhost:3306 ssl  world_x  SQL > select count(*) as total, countrycode from city group by countrycode having total = 1 order by total;
++-------+-------------+
+| total | countrycode |
++-------+-------------+
+|     1 | ABW         |
+|     1 | ALB         |
+|     1 | AND         |
+|     1 | ANT         |
+|     1 | ATG         |
+|     1 | BDI         |
+|     1 | BHR         |
+|     1 | BHS         |
+|     1 | BRB         |
+|     1 | BRN         |
+|     1 | BTN         |
+|     1 | CAF         |
+|     1 | COK         |
+|     1 | COM         |
+|     1 | CPV         |
+|     1 | CRI         |
+|     1 | CXR         |
+|     1 | CYM         |
+|     1 | DJI         |
+|     1 | DMA         |
+|     1 | ERI         |
+|     1 | ESH         |
+|     1 | FJI         |
+|     1 | FLK         |
+|     1 | FRO         |
+|     1 | GAB         |
+|     1 | GIB         |
+|     1 | GIN         |
+|     1 | GNB         |
+|     1 | GNQ         |
+|     1 | GRD         |
+|     1 | GRL         |
+|     1 | GUF         |
+|     1 | GUY         |
+|     1 | ISL         |
+|     1 | KNA         |
+|     1 | LBR         |
+|     1 | LCA         |
+|     1 | LSO         |
+|     1 | LUX         |
+|     1 | MAC         |
+|     1 | MDV         |
+|     1 | MHL         |
+|     1 | MKD         |
+|     1 | MLI         |
+|     1 | MNG         |
+|     1 | MNP         |
+|     1 | MSR         |
+|     1 | MTQ         |
+|     1 | MYT         |
+|     1 | NAM         |
+|     1 | NCL         |
+|     1 | NFK         |
+|     1 | NIU         |
+|     1 | PCN         |
+|     1 | PLW         |
+|     1 | PNG         |
+|     1 | QAT         |
+|     1 | REU         |
+|     1 | RWA         |
+|     1 | SGP         |
+|     1 | SHN         |
+|     1 | SJM         |
+|     1 | SLB         |
+|     1 | SLE         |
+|     1 | SPM         |
+|     1 | STP         |
+|     1 | SUR         |
+|     1 | SWZ         |
+|     1 | SYC         |
+|     1 | TCA         |
+|     1 | TGO         |
+|     1 | TKL         |
+|     1 | TMP         |
+|     1 | TON         |
+|     1 | TUV         |
+|     1 | UGA         |
+|     1 | URY         |
+|     1 | VAT         |
+|     1 | VCT         |
+|     1 | VGB         |
+|     1 | VIR         |
+|     1 | VUT         |
+|     1 | WLF         |
+|     1 | WSM         |
++-------+-------------+
+85 rows in set (0.0038 sec)
+ MySQL  localhost:3306 ssl  world_x  SQL > select sum(population) as total, countrycode from city group by countrycode having total < 1000000 order by total;
++--------+-------------+
+| total  | countrycode |
++--------+-------------+
+|     42 | PCN         |
+|    300 | TKL         |
+|    455 | VAT         |
+|    670 | CCK         |
+|    682 | NIU         |
+|    700 | CXR         |
+|    800 | NFK         |
+|   1137 | WLF         |
+|   1438 | SJM         |
+|   1500 | SHN         |
+|   1556 | AIA         |
+|   1636 | FLK         |
+|   2000 | MSR         |
+|   2301 | LCA         |
+|   2345 | ANT         |
+|   3000 | BMU         |
+|   4600 | TUV         |
+|   4609 | NRU         |
+|   4621 | GRD         |
+|   4800 | TCA         |
+|   5808 | SPM         |
+|   6070 | BRB         |
+|   7096 | SMR         |
+|   7281 | KIR         |
+|   7523 | ASM         |
+|   8000 | VGB         |
+|   9200 | MNP         |
+|  10389 | LIE         |
+|  10639 | GUM         |
+|  11600 | KNA         |
+|  11900 | COK         |
+|  12000 | MYT         |
+|  12000 | PLW         |
+|  13000 | VIR         |
+|  13445 | GRL         |
+|  14388 | MCO         |
+|  14542 | FRO         |
+|  16243 | DMA         |
+|  17100 | VCT         |
+|  19600 | CYM         |
+|  21189 | AND         |
+|  21484 | BRN         |
+|  22000 | BTN         |
+|  22400 | TON         |
+|  24000 | ATG         |
+|  27025 | GIB         |
+|  28000 | MHL         |
+|  28518 | MLT         |
+|  29034 | ABW         |
+|  30600 | FSM         |
+|  33700 | VUT         |
+|  35900 | WSM         |
+|  36000 | COM         |
+|  40000 | GNQ         |
+|  41000 | SYC         |
+|  47900 | TMP         |
+|  49541 | STP         |
+|  50100 | SLB         |
+|  50699 | GUF         |
+|  51441 | PYF         |
+|  61000 | SWZ         |
+|  62915 | BLZ         |
+|  71000 | MDV         |
+|  75380 | GLP         |
+|  76293 | NCL         |
+|  77366 | FJI         |
+|  80700 | LUX         |
+|  94050 | MTQ         |
+|  94800 | CPV         |
+|  99997 | TTO         |
+| 109184 | ISL         |
+| 112000 | SUR         |
+| 131480 | REU         |
+| 144926 | GMB         |
+| 148000 | BHR         |
+| 169000 | ESH         |
+| 169000 | NAM         |
+| 172000 | BHS         |
+| 241000 | GNB         |
+| 247000 | PNG         |
+| 254000 | GUY         |
+| 261252 | KWT         |
+| 270000 | ALB         |
+| 286000 | RWA         |
+| 297000 | LSO         |
+| 300000 | BDI         |
+| 314140 | JAM         |
+| 314822 | BWA         |
+| 337280 | MUS         |
+| 339131 | CRI         |
+| 349400 | CYP         |
+| 355000 | QAT         |
+| 375000 | TGO         |
+| 383000 | DJI         |
+| 386518 | SVN         |
+| 419000 | GAB         |
+| 431000 | ERI         |
+| 437500 | MAC         |
+| 444299 | MKD         |
+| 505227 | EST         |
+| 524000 | CAF         |
+| 537096 | OMN         |
+| 599106 | BIH         |
+| 609041 | IRL         |
+| 628452 | LAO         |
+| 630465 | TCD         |
+| 653857 | NER         |
+| 685500 | TJK         |
+| 764900 | MRT         |
+| 773700 | MNG         |
+| 784143 | SVK         |
+| 786755 | PAN         |
+| 805055 | KHM         |
+| 809552 | MLI         |
+| 812100 | KGZ         |
+| 850000 | LBR         |
+| 850000 | SLE         |
+| 890800 | UGA         |
+| 902360 | PSE         |
+| 914119 | MWI         |
+| 914200 | CHE         |
+| 968503 | BEN         |
+| 968596 | LVA         |
+| 972600 | TKM         |
++--------+-------------+
+124 rows in set (0.0101 sec)
